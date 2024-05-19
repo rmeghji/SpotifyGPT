@@ -8,7 +8,11 @@ from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)
 gpt = ChatOpenAI(api_key=OPENAI_API_KEY)
 tool_parser = OpenAIToolsAgentOutputParser()
 
@@ -67,6 +71,7 @@ agent = (
 
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
+# @app.route('/')
 def main():
     while True:
         result = agent_executor.invoke({'input': input(), 'chat_history': chat_history})
@@ -82,5 +87,24 @@ def main():
             ]
         )
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.get_json()['input']
+    result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
+    chat_history.extend(
+            [
+                HumanMessage(
+                    content=result['input'],
+                ),
+                AIMessage(
+                    content=result['output'],
+                    agent=agent_executor.agent,
+                ),
+            ]
+        )
+    return jsonify({'response': result['output']})
+
 if __name__ == "__main__":
-    main()
+    app.run()
+
+    
