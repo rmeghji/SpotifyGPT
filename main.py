@@ -87,7 +87,7 @@ def main():
             ]
         )
 
-@app.route('/chat', methods=['POST'])
+@app.route('/', methods=['POST'])
 def chat():
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
