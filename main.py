@@ -1,4 +1,4 @@
-from api_keys import OPENAI_API_KEY
+# from api_keys import OPENAI_API_KEY
 import langchain
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -13,7 +13,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-gpt = ChatOpenAI(api_key=OPENAI_API_KEY)
+gpt = ChatOpenAI()
 tool_parser = OpenAIToolsAgentOutputParser()
 
 @tool

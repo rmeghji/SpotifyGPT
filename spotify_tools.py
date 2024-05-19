@@ -1,13 +1,13 @@
-from api_keys import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI
+# from api_keys import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI
 from time import sleep
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from langchain.agents import tool
 
 scope=['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
-OAUTH_ARGS = {'client_id': SPOTIPY_CLIENT_ID, 'client_secret': SPOTIPY_CLIENT_SECRET, 'redirect_uri': SPOTIPY_REDIRECT_URI, 'scope': scope}
+# OAUTH_ARGS = {'client_id': SPOTIPY_CLIENT_ID, 'client_secret': SPOTIPY_CLIENT_SECRET, 'redirect_uri': SPOTIPY_REDIRECT_URI, 'scope': scope}
 # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope, client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI))
-spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(**OAUTH_ARGS))
+spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth())
 
 # set_auth
 
@@ -20,7 +20,7 @@ def check_login():
             break
         except:
             # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope))
-            spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(**OAUTH_ARGS))
+            spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth())
 
     return "User is logged into Spotify and has the necessary permissions.\n"
 
