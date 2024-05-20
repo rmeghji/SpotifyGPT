@@ -48,8 +48,9 @@ export default {
     login() {
       axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login')
       .then(response => {
-        console.log(response.data.url)
-        // window.location.href = response.data.url
+        response.setHeader('Access-Control-Allow-Origin', '*')
+        // console.log(response.data.url)
+        window.location.href = response.data.url
       })
       .catch(error => {
         console.error(error)

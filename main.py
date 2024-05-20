@@ -27,7 +27,7 @@ from spotify_tools import check_login, current_track, skip, pause, play, search,
 @cross_origin()
 @app.route('/login', methods=['GET'])
 def login():
-    return redirect(auth_manager.get_authorize_url())
+    return redirect(auth_manager.get_authorize_url() + '/')
 
 @tool
 def test_tool():
