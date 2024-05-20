@@ -33,7 +33,8 @@ def callback():
     token = auth_manager.get_access_token(request.args['code'])
     global spotify
     # spotify = spotify_setup(token=token)
-    spotify = spotipy.Spotify(token, auth_manager=auth_manager)
+    # spotify = spotipy.Spotify(auth=token, auth_manager=auth_manager)
+    spotify = spotipy.Spotify(auth=token)
     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
     return redirect('http://localhost:5173/')
 
