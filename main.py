@@ -20,16 +20,21 @@ tool_parser = OpenAIToolsAgentOutputParser()
 
 scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
 auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
-spotify = spotipy.Spotify(auth_manager=auth_manager)
+# spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
+spotify = None
+
+def spotify_setup(token):
+    global spotify
+    spotify = spotipy.Spotify(token, auth_manager=auth_manager)
+    return spotify
 
 @cross_origin()
 @app.route('/callback', methods=['GET'])
 def callback():
-    auth_manager.get_access_token(request.args['code'])
+    token = auth_manager.get_access_token(request.args['code'])
     # spotify = spotipy.Spotify(auth_manager=auth_manager)
-    spotify.auth_manager = auth_manager
+    spotify = spotify_setup(token=token)
     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
     return redirect('http://localhost:5173/')
 
@@ -37,6 +42,8 @@ def callback():
 @app.route('/login', methods=['GET'])
 def login():
     return redirect(auth_manager.get_authorize_url())
+
+from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 
 @tool
 def test_tool():
