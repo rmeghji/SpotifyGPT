@@ -27,7 +27,7 @@ spotify = None
 # def spotify_setup(token):
 #     return spotipy.Spotify(token, auth_manager=auth_manager)
 
-@cross_origin()
+# @cross_origin()
 @app.route('/callback', methods=['GET'])
 def callback():
     token = auth_manager.get_access_token(request.args['code'])['access_token']
@@ -39,7 +39,7 @@ def callback():
     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
     return redirect('http://localhost:5173/')
 
-@cross_origin()
+# @cross_origin()
 @app.route('/login', methods=['GET'])
 def login():
     return redirect(auth_manager.get_authorize_url())

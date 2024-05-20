@@ -34,7 +34,8 @@ export default {
     sendMessage() {
       this.tempInput = this.userInput
 
-      axios.post('https://spotifygpt-1267e7132268.herokuapp.com/', { input: this.userInput })
+      // axios.post('https://spotifygpt-1267e7132268.herokuapp.com/', { input: this.userInput })
+      axios.post('/api/', { input: this.userInput })
       .then(response => {
         this.chatResponse = response.data.response
         this.tempInput = ''
@@ -46,10 +47,9 @@ export default {
       })
     },
     login() {
-      axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login')
+      // axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login')
+      axios.get('/api/login', { headers: { 'Access-Control-Allow-Origin': '*' }})
       .then(response => {
-        response.setHeader('Access-Control-Allow-Origin', '*')
-        console.log(response.data.url)
         window.location.href = response.data.url
       })
       .catch(error => {
