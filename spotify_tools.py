@@ -29,7 +29,8 @@ def check_login():
             break
         except:
             # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope))
-            return f"User is not logged into Spotify or does not have the necessary permissions. Please log in to Spotify at {auth_manager._get_auth_response_interactive(open_browser=True)} and grant the necessary permissions.\n"
+            # return f"User is not logged into Spotify or does not have the necessary permissions. Please log in to Spotify at {} and grant the necessary permissions.\n"
+            auth_manager._get_auth_response_interactive(open_browser=True)
             spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth())
 
     return "User is logged into Spotify and has the necessary permissions.\n"
