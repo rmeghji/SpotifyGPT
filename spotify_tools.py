@@ -3,20 +3,20 @@ from time import sleep
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from langchain.agents import tool
-from flask import Flask, jsonify, request, session
-from flask_cors import CORS, cross_origin
-
-app = Flask(__name__)
-CORS(app)
+from flask import Flask, redirect
+# from flask_cors import CORS, cross_origin
+from main import app
 
 scope=['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
 # OAUTH_ARGS = {'client_id': SPOTIPY_CLIENT_ID, 'client_secret': SPOTIPY_CLIENT_SECRET, 'redirect_uri': SPOTIPY_REDIRECT_URI, 'scope': scope}
 # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope, client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI))
 
-cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
-auth_manager = SpotifyOAuth(scope=scope,
-                            cache_handler=cache_handler)
-auth_url = auth_manager.get_authorize_url()
+auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
+# auth_url = 
+
+@app.route('/login', methods=['GET'])
+def login():
+    return redirect(auth_manager.get_authorize_url())
 
 spotify = spotipy.Spotify(auth_manager=auth_manager)
 
