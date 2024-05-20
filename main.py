@@ -9,7 +9,7 @@ from langchain.agents.format_scratchpad.openai_tools import format_to_openai_too
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 # from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 from flask import Flask, jsonify, redirect, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
 
@@ -24,6 +24,7 @@ spotify = spotipy.Spotify(auth_manager=auth_manager)
 
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 
+@cross_origin(origins=['http://localhost:5173/'], allow_headers=['Content-Type', 'Access-Control-Allow-Origin', 'Authorization'])
 @app.route('/login', methods=['GET'])
 def login():
     return redirect(auth_manager.get_authorize_url())
