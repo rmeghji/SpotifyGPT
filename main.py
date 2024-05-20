@@ -24,17 +24,16 @@ auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
 
 spotify = None
 
-def spotify_setup(token):
-    global spotify
-    spotify = spotipy.Spotify(token, auth_manager=auth_manager)
-    return spotify
+# def spotify_setup(token):
+#     return spotipy.Spotify(token, auth_manager=auth_manager)
 
 @cross_origin()
 @app.route('/callback', methods=['GET'])
 def callback():
     token = auth_manager.get_access_token(request.args['code'])
-    # spotify = spotipy.Spotify(auth_manager=auth_manager)
-    spotify = spotify_setup(token=token)
+    global spotify
+    # spotify = spotify_setup(token=token)
+    spotify = spotipy.Spotify(token, auth_manager=auth_manager)
     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
     return redirect('http://localhost:5173/')
 
