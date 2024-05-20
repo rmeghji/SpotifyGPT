@@ -24,7 +24,7 @@ spotify = spotipy.Spotify(auth_manager=auth_manager)
 
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 
-@cross_origin(origins=['http://localhost:5173/'], allow_headers=['Content-Type', 'Access-Control-Allow-Origin', 'Authorization'])
+@cross_origin(origins=['http://localhost:5173'], allow_headers=['Content-Type', 'Access-Control-Allow-Origin', 'Authorization'])
 @app.route('/login', methods=['GET'])
 def login():
     return redirect(auth_manager.get_authorize_url())
