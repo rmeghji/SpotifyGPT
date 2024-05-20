@@ -29,7 +29,7 @@ export default {
     sendMessage() {
       this.tempInput = this.userInput
 
-      axios.post('http://127.0.0.1:5000/', { input: this.userInput })
+      axios.post('https://spotifygpt-1267e7132268.herokuapp.com/', { input: this.userInput })
       .then(response => {
         this.chatResponse = response.data.response
         this.tempInput = ''

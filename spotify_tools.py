@@ -3,13 +3,22 @@ from time import sleep
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from langchain.agents import tool
+from flask import Flask, jsonify, request, session
+from flask_cors import CORS, cross_origin
+
+app = Flask(__name__)
+CORS(app)
 
 scope=['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
 # OAUTH_ARGS = {'client_id': SPOTIPY_CLIENT_ID, 'client_secret': SPOTIPY_CLIENT_SECRET, 'redirect_uri': SPOTIPY_REDIRECT_URI, 'scope': scope}
 # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope, client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI))
-spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth())
 
-# set_auth
+cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+auth_manager = SpotifyOAuth(scope=scope,
+                            cache_handler=cache_handler)
+auth_url = auth_manager.get_authorize_url()
+
+spotify = spotipy.Spotify(auth_manager=auth_manager)
 
 @tool
 def check_login():
@@ -20,6 +29,7 @@ def check_login():
             break
         except:
             # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope))
+            return f"User is not logged into Spotify or does not have the necessary permissions. Please log in to Spotify at {auth_manager._get_auth_response_interactive(open_browser=True)} and grant the necessary permissions.\n"
             spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth())
 
     return "User is logged into Spotify and has the necessary permissions.\n"
