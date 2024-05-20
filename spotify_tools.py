@@ -22,15 +22,15 @@ spotify = spotipy.Spotify(auth_manager=auth_manager)
 
 @tool
 def check_login():
-    '''Checks that the user is logged into Spotify and has the necessary permissions.'''
+    '''Checks that the user is logged into Spotify and has the necessary permissions. If not, tells the user to log in to Spotify and grant the necessary permissions, providing a URL to do so which should be given to the user.'''
     while True:
         try:
             spotify.current_user()
             break
         except:
             # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope))
-            # return f"User is not logged into Spotify or does not have the necessary permissions. Please log in to Spotify at {} and grant the necessary permissions.\n"
-            auth_manager._get_auth_response_interactive(open_browser=True)
+            return f"User is not logged into Spotify or does not have the necessary permissions. Please log in to Spotify at {auth_manager.get_authorize_url()} and grant the necessary permissions.\n"
+            # auth_manager._get_auth_response_interactive(open_browser=True)
             spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth())
 
     return "User is logged into Spotify and has the necessary permissions.\n"
