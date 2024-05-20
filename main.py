@@ -31,6 +31,7 @@ spotify = None
 @app.route('/callback', methods=['GET'])
 def callback():
     token = auth_manager.get_access_token(request.args['code'])
+    return token
     global spotify
     # spotify = spotify_setup(token=token)
     # spotify = spotipy.Spotify(auth=token, auth_manager=auth_manager)
