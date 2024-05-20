@@ -25,6 +25,13 @@ spotify = spotipy.Spotify(auth_manager=auth_manager)
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 
 @cross_origin()
+@app.route('/callback', methods=['GET'])
+def callback():
+    auth_manager.get_access_token(request.args['code'])
+    print("Logged in to Spotify and granted necessary permissions. You can now close this tab and return to the chat.")
+    return redirect('http://localhost:5173/')
+
+@cross_origin()
 @app.route('/login', methods=['GET'])
 def login():
     return redirect(auth_manager.get_authorize_url())
