@@ -28,7 +28,9 @@ from spotify_tools import check_login, current_track, skip, pause, play, search,
 @app.route('/callback', methods=['GET'])
 def callback():
     auth_manager.get_access_token(request.args['code'])
-    print("Logged in to Spotify and granted necessary permissions. You can now close this tab and return to the chat.")
+    # spotify = spotipy.Spotify(auth_manager=auth_manager)
+    spotify.auth_manager = auth_manager
+    print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
     return redirect('http://localhost:5173/')
 
 @cross_origin()
