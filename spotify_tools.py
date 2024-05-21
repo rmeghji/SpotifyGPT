@@ -74,9 +74,11 @@ def play(spotify):
     else:
         return f"The current track is already playing.\n"
     
-@with_spotify_auth
-def search(spotify, input: str):
+# @with_spotify_auth
+@tool
+def search(input: str):
     '''Takes in a user's request and finds songs, albums, artists, or playlists that match the query.'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     results = spotify.search(q=input, limit=2, type='track,album,artist,playlist')
     songs = '\n'.join([f"{result['name']} by {result['artists'][0]['name']}\nURI: {result['uri']}" for result in results['tracks']['items']])
     albums = '\n'.join([f"{result['name']} by {result['artists'][0]['name']}\nURI: {result['uri']}" for result in results['albums']['items']])
@@ -85,9 +87,11 @@ def search(spotify, input: str):
 
     return f"Search results for '{input}':\nSongs:\n{songs}\n\nAlbums:\n{albums}\n\nArtists:\n{artists}\n\nPlaylists:\n{playlists}\n"
 
-@with_spotify_auth
-def narrow_search(spotify, song_uris: list, album_uris: list, artist_uris: list, playlist_uris: list):
+# @with_spotify_auth
+@tool
+def narrow_search(song_uris: list, album_uris: list, artist_uris: list, playlist_uris: list):
     '''Takes in all URI values from the results of a search query and narrows down the search to items that are saved in the user's Spotify account or artists that the user follows.'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     track_uris = song_uris
     saved_tracks = []
     if song_uris:
