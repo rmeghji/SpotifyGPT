@@ -24,11 +24,8 @@ auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
 
 spotify = None
 
-# def spotify_setup(token):
-#     return spotipy.Spotify(token, auth_manager=auth_manager)
-
-@app.route('/callback', methods=['GET'], allow_headers=['content-type', 'authorization'], expose_headers=['Authorization'])
-@cross_origin(origins=['http://localhost:5173'])
+@app.route('/callback', methods=['GET'])
+@cross_origin(origins=['http://localhost:5173'], allow_headers=['content-type', 'authorization'], expose_headers=['Authorization'])
 def callback():
     code = request.args['code']
     token = auth_manager.get_access_token(code=code)['access_token']
