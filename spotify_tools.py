@@ -17,6 +17,7 @@ from spotify_auth import SpotifyManager
 def with_spotify_auth(func):
     @tool
     def wrapper(*args, **kwargs):
+        '''Wrapper function that checks if the user is logged into Spotify and has the necessary permissions. If so, it runs the function. If not, it tells the user to log in to Spotify and grant the necessary permissions.'''
         if not session['spotify_access_token']:
             return "Please log in to Spotify first.\n"
         else:
