@@ -14,26 +14,27 @@ from spotify_auth import SpotifyManager
 
 # spotify = SpotifyManager.get_instance().spotify
 
-def with_spotify_auth(func):
-    @tool
-    def wrapper(*args, **kwargs):
-        '''Wrapper function that checks if the user is logged into Spotify and has the necessary permissions. If so, it runs the function. If not, it tells the user to log in to Spotify and grant the necessary permissions.'''
-        if not session['spotify_access_token']:
-            return "Please log in to Spotify first.\n"
-        else:
-            spotify = spotipy.Spotify(auth=session['spotify_access_token'])
-        return func(spotify, *args, **kwargs)
-    return wrapper
+# def with_spotify_auth(func):
+#     @tool
+#     def wrapper(*args, **kwargs):
+#         '''Wrapper function that checks if the user is logged into Spotify and has the necessary permissions. If so, it runs the function. If not, it tells the user to log in to Spotify and grant the necessary permissions.'''
+#         if not session['spotify_access_token']:
+#             return "Please log in to Spotify first.\n"
+#         else:
+#             spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+#         return func(spotify, *args, **kwargs)
+#     return wrapper
 
 
-@with_spotify_auth
-def check_login(spotify):
+# @with_spotify_auth
+@tool
+def check_login():
     '''Checks that the user is logged into Spotify and has the necessary permissions. If not, tells the user to log in to Spotify and grant the necessary permissions, providing a URL to do so which should be given to the user.'''
     while True:
         try:
             # spotify = SpotifyManager.get_instance().spotify
             # global spotify
-            # spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+            spotify = spotipy.Spotify(auth=session['spotify_access_token'])
             spotify.current_user()
             break
         except:
@@ -44,30 +45,38 @@ def check_login(spotify):
 
     return "User is logged into Spotify and has the necessary permissions.\n"
 
-@with_spotify_auth
-def current_track(spotify):
+# @with_spotify_auth
+@tool
+def current_track():
     '''Returns the current track playing on the user's Spotify account in the format "Artist Name - Song Title".'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     return f"{spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}\n"
 
-@with_spotify_auth
-def skip(spotify):
+# @with_spotify_auth
+@tool
+def skip():
     '''Skips to the next track in the user's Spotify queue. Tells user what song is now playing.'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.next_track()
     sleep(0.5)
     return f"Skipped to the next track. Now playing is {spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}.\n"
 
-@with_spotify_auth
-def pause(spotify):
+# @with_spotify_auth
+@tool
+def pause():
     '''Pauses the current track in the user's Spotify queue.'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     if spotify.current_playback()['is_playing']:
         spotify.pause_playback()
         return f"Paused the current track.\n"
     else:
         return f"Playback is already paused.\n"
 
-@with_spotify_auth
-def play(spotify):
+# @with_spotify_auth
+@tool
+def play():
     '''Plays the current track in the user's Spotify queue.'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     if not spotify.current_playback()['is_playing']:
         spotify.start_playback()
         return f"Playing the current track.\n"
