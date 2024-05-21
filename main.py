@@ -105,7 +105,6 @@ agent = (
 
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-# @app.route('/')
 def main():
     while True:
         result = agent_executor.invoke({'input': input(), 'chat_history': chat_history})
