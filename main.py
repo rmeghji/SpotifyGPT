@@ -7,7 +7,7 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
-from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist
+from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 from flask import Flask, jsonify, redirect, request, Blueprint, session, render_template, url_for
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
@@ -66,7 +66,7 @@ def exit_tool():
     '''Exits the program when told to exit.'''
     exit()
 
-tools = [test_tool, exit_tool, check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist]
+tools = [test_tool, exit_tool, check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist]
 gpt = gpt.bind_tools(tools=tools)
 chat_history = []
 
