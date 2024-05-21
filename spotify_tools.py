@@ -140,7 +140,7 @@ def narrow_search(spotify, song_uris: list, album_uris: list, artist_uris: list,
 
 # @with_spotify_auth
 @tool
-def play_song(spotify, song_uri: str):
+def play_song(song_uri: str):
     '''Plays a song with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(uris=[song_uri])
@@ -154,7 +154,7 @@ def play_song(spotify, song_uri: str):
 
 # @with_spotify_auth
 @tool
-def play_album(spotify, album_uri: str):
+def play_album(album_uri: str):
     '''Plays an album with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(context_uri=album_uri)
@@ -169,7 +169,7 @@ def play_album(spotify, album_uri: str):
 
 # @with_spotify_auth
 @tool
-def play_artist(spotify, artist_uri: str):
+def play_artist(artist_uri: str):
     '''Plays an artist with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(context_uri=artist_uri)
@@ -184,7 +184,7 @@ def play_artist(spotify, artist_uri: str):
 
 # @with_spotify_auth
 @tool
-def play_playlist(spotify, playlist_uri: str):
+def play_playlist(playlist_uri: str):
     '''Plays a playlist with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(context_uri=playlist_uri)
