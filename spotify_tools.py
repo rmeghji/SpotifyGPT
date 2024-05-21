@@ -12,7 +12,8 @@ from spotify_auth import SpotifyManager
 # OAUTH_ARGS = {'client_id': SPOTIPY_CLIENT_ID, 'client_secret': SPOTIPY_CLIENT_SECRET, 'redirect_uri': SPOTIPY_REDIRECT_URI, 'scope': scope}
 # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope, client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI))
 
-spotify = SpotifyManager.get_instance().spotify
+# spotify = SpotifyManager.get_instance().spotify
+spotify = None
 
 @tool
 def check_login():
@@ -20,6 +21,7 @@ def check_login():
     while True:
         try:
             # spotify = SpotifyManager.get_instance().spotify
+            global spotify
             spotify = spotipy.Spotify(auth=session['spotify_access_token'])
             spotify.current_user()
             break
