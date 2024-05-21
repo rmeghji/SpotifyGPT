@@ -28,7 +28,7 @@ spotify = None
 #     return spotipy.Spotify(token, auth_manager=auth_manager)
 
 # @cross_origin()
-@app.route('/callback', methods=['GET, POST, PUT, DELETE'], )
+@app.route('/callback', methods=['GET'], )
 def callback():
     token = auth_manager.get_access_token(request.args['code'])['access_token']
     # return token
@@ -43,7 +43,7 @@ def callback():
     return response
 
 # @cross_origin()
-@app.route('/login', methods=['GET, POST, PUT, DELETE'])
+@app.route('/login', methods=['GET'])
 def login():
     response = redirect(auth_manager.get_authorize_url())
     response.headers['Access-Control-Allow-Origin'] = '*'
