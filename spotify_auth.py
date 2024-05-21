@@ -29,9 +29,10 @@ class SpotifyManager:
     # @app.route('/callback', methods=['GET'])
     @api_bp.route('/callback', methods=['GET'])
     @cross_origin(origins=['http://localhost:5173'])
-    def callback(self):
+    def callback():
         code = request.args['code']
-        token = self.auth_manager.get_access_token(code=code)['access_token']
+        # token = self.auth_manager.get_access_token(code=code)['access_token']
+        token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
         global spotify
         spotify = spotipy.Spotify(auth=token)
         print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
@@ -45,8 +46,9 @@ class SpotifyManager:
     # @app.route('/login', methods=['GET'])
     @api_bp.route('/login', methods=['GET'])
     @cross_origin(origins=['http://localhost:5173'])
-    def login(self):
-        response = redirect(self.auth_manager.get_authorize_url())
+    def login():
+        # response = redirect(self.auth_manager.get_authorize_url())
+        response = redirect(SpotifyManager.get_instance().auth_manager.get_authorize_url())
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = '*'
