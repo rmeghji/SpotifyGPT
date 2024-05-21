@@ -3,7 +3,7 @@ from time import sleep
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from langchain.agents import tool
-from flask import Flask, redirect
+from flask import Flask, redirect, session
 from spotify_auth import SpotifyManager
 # from main import spotify
 # from flask_cors import CORS, cross_origin
@@ -19,7 +19,8 @@ def check_login():
     '''Checks that the user is logged into Spotify and has the necessary permissions. If not, tells the user to log in to Spotify and grant the necessary permissions, providing a URL to do so which should be given to the user.'''
     while True:
         try:
-            spotify = SpotifyManager.get_instance().spotify
+            # spotify = SpotifyManager.get_instance().spotify
+            spotify = spotipy.Spotify(auth=session['spotify_access_token'])
             spotify.current_user()
             break
         except:
@@ -33,7 +34,7 @@ def check_login():
 @tool
 def current_track():
     '''Returns the current track playing on the user's Spotify account in the format "Artist Name - Song Title".'''
-    spotify = SpotifyManager.get_instance().spotify
+    # spotify = SpotifyManager.get_instance().spotify
     return f"{spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}\n"
 
 @tool

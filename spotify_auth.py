@@ -1,5 +1,5 @@
 # spotify_auth.py
-from flask import Flask, redirect, request, Blueprint
+from flask import Flask, redirect, request, Blueprint, url_for, session
 from flask_cors import cross_origin
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -37,7 +37,9 @@ class SpotifyManager:
         spotify = spotipy.Spotify(auth=token)
         print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
 
-        response = redirect('http://localhost:5173/')
+        # response = redirect('http://localhost:5173/')
+        session['spotify_access_token'] = token
+        response = redirect(url_for('app.chat'))
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
