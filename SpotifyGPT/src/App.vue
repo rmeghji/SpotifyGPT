@@ -50,7 +50,6 @@ export default {
       // axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login')
       axios.get('/api/login', {
         headers: {
-          'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json'
         }
       })

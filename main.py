@@ -27,7 +27,6 @@ spotify = None
 @app.route('/callback', methods=['GET'])
 @cross_origin(origins=['http://localhost:5173'])
 def callback():
-    request.headers['Access-Control-Allow-Origin'] = '*'
     code = request.args['code']
     token = auth_manager.get_access_token(code=code)['access_token']
     global spotify
