@@ -2,7 +2,7 @@ from flask import Flask, redirect, request
 from flask_cors import cross_origin
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from .import app
+from run import app
 
 class SpotifyManager:
     _instance = None

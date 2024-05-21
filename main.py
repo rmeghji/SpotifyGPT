@@ -12,7 +12,7 @@ from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
-from .import app
+from run import app
 from spotify_auth import SpotifyManager
 
 # app = Flask(__name__)
