@@ -39,7 +39,8 @@ class SpotifyManager:
 
         # response = redirect('http://localhost:5173/')
         session['spotify_access_token'] = token
-        response = redirect(url_for('app.chat'))
+        response = redirect('http://localhost:5173/')
+        # response = redirect(url_for('app.chat'))
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
