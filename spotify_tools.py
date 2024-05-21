@@ -203,8 +203,10 @@ def play_playlist(playlist_uri: str):
     spotify.start_playback(context_uri=playlist_uri)
     return f"Playing playlist.\n"
 
-@with_spotify_auth
+# @with_spotify_auth
+@tool
 def queue_song(spotify, song_name: str):
     '''Queues a song with the given name to the user's Spotify queue.'''
+    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.add_to_queue(song_name)
     return f"Queued {song_name}.\n"
