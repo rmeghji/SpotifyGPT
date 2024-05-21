@@ -4,20 +4,21 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from langchain.agents import tool
 from flask import Flask, redirect
-from main import spotify
-import importlib
+from spotify_auth import SpotifyManager
+# from main import spotify
 # from flask_cors import CORS, cross_origin
 # from main import app
 
 # OAUTH_ARGS = {'client_id': SPOTIPY_CLIENT_ID, 'client_secret': SPOTIPY_CLIENT_SECRET, 'redirect_uri': SPOTIPY_REDIRECT_URI, 'scope': scope}
 # spotify = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope, client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI))
 
+spotify = SpotifyManager.get_instance().spotify
+
 @tool
 def check_login():
     '''Checks that the user is logged into Spotify and has the necessary permissions. If not, tells the user to log in to Spotify and grant the necessary permissions, providing a URL to do so which should be given to the user.'''
     while True:
         try:
-            importlib.reload(spotify)
             spotify.current_user()
             break
         except:

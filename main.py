@@ -7,48 +7,52 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
-# from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
+from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
+from .import app
+from spotify_auth import SpotifyManager
 
-app = Flask(__name__)
-CORS(app)
+# app = Flask(__name__)
+# CORS(app)
 gpt = ChatOpenAI()
 tool_parser = OpenAIToolsAgentOutputParser()
 
-scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
-auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
-# spotify = spotipy.Spotify(auth_manager=auth_manager)
+spotify = SpotifyManager.get_instance().spotify
 
-spotify = None
+# scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
+# auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
+# # spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-@app.route('/callback', methods=['GET'])
-@cross_origin(origins=['http://localhost:5173'])
-def callback():
-    code = request.args['code']
-    token = auth_manager.get_access_token(code=code)['access_token']
-    global spotify
-    spotify = spotipy.Spotify(auth=token)
-    print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
+# spotify = None
 
-    response = redirect('http://localhost:5173/')
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
-    return response
+# @app.route('/callback', methods=['GET'])
+# @cross_origin(origins=['http://localhost:5173'])
+# def callback():
+#     code = request.args['code']
+#     token = auth_manager.get_access_token(code=code)['access_token']
+#     global spotify
+#     spotify = spotipy.Spotify(auth=token)
+#     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
 
-@app.route('/login', methods=['GET'])
-@cross_origin(origins=['http://localhost:5173'])
-def login():
-    response = redirect(auth_manager.get_authorize_url())
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = '*'
-    return response
+#     response = redirect('http://localhost:5173/')
+#     response.headers['Access-Control-Allow-Origin'] = '*'
+#     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+#     response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
+#     return response
 
-from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
+# @app.route('/login', methods=['GET'])
+# @cross_origin(origins=['http://localhost:5173'])
+# def login():
+#     response = redirect(auth_manager.get_authorize_url())
+#     response.headers['Access-Control-Allow-Origin'] = '*'
+#     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+#     response.headers['Access-Control-Allow-Headers'] = '*'
+#     return response
+
+# from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 
 @tool
 def test_tool():
