@@ -19,6 +19,7 @@ def check_login():
     '''Checks that the user is logged into Spotify and has the necessary permissions. If not, tells the user to log in to Spotify and grant the necessary permissions, providing a URL to do so which should be given to the user.'''
     while True:
         try:
+            spotify = SpotifyManager.get_instance().spotify
             spotify.current_user()
             break
         except:
@@ -32,6 +33,7 @@ def check_login():
 @tool
 def current_track():
     '''Returns the current track playing on the user's Spotify account in the format "Artist Name - Song Title".'''
+    spotify = SpotifyManager.get_instance().spotify
     return f"{spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}\n"
 
 @tool
