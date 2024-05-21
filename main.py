@@ -1,4 +1,4 @@
-# from api_keys import OPENAI_API_KEY
+# main.py
 import langchain
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -8,12 +8,14 @@ from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, Blueprint
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
-from run import app
+# from run import app
 from spotify_auth import SpotifyManager
+
+app_bp = Blueprint('app', __name__)
 
 # app = Flask(__name__)
 # CORS(app)
@@ -124,7 +126,8 @@ def main():
             ]
         )
 
-@app.route('/', methods=['POST'])
+# @app.route('/', methods=['POST'])
+@app_bp.route('/', methods=['POST'])
 def chat():
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})

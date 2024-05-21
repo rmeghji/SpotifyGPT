@@ -1,4 +1,4 @@
-# from api_keys import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI
+# spotify_tools.py
 from time import sleep
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
