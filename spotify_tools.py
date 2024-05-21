@@ -176,11 +176,11 @@ def play_artist(spotify, artist_uri: str):
 #     spotify.start_playback(context_uri=f"spotify:playlist:{playlist_id}")
 #     return f"Playing {playlist_name}.\n"
 
-@with_spotify_auth
-def play_playlist(spotify, playlist_uri: str):
-    '''Plays a playlist with the given URI on the user's Spotify account.'''
-    spotify.start_playback(context_uri=playlist_uri)
-    return f"Playing playlist.\n"
+# @with_spotify_auth
+# def play_playlist(spotify, playlist_uri: str):
+#     '''Plays a playlist with the given URI on the user's Spotify account.'''
+#     spotify.start_playback(context_uri=playlist_uri)
+#     return f"Playing playlist.\n"
 
 @with_spotify_auth
 def queue_song(spotify, song_name: str):

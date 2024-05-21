@@ -66,7 +66,7 @@ def exit_tool():
     '''Exits the program when told to exit.'''
     exit()
 
-tools = [test_tool, exit_tool, check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist]
+tools = [test_tool, exit_tool, check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist]
 gpt = gpt.bind_tools(tools=tools)
 chat_history = []
 
