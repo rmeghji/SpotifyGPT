@@ -44,45 +44,39 @@ def check_login(spotify):
 
     return "User is logged into Spotify and has the necessary permissions.\n"
 
-@tool
-def current_track():
+@with_spotify_auth
+def current_track(spotify):
     '''Returns the current track playing on the user's Spotify account in the format "Artist Name - Song Title".'''
-    # spotify = SpotifyManager.get_instance().spotify
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     return f"{spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}\n"
 
-@tool
-def skip():
+@with_spotify_auth
+def skip(spotify):
     '''Skips to the next track in the user's Spotify queue. Tells user what song is now playing.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.next_track()
     sleep(0.5)
     return f"Skipped to the next track. Now playing is {spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}.\n"
 
-@tool
-def pause():
+@with_spotify_auth
+def pause(spotify):
     '''Pauses the current track in the user's Spotify queue.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     if spotify.current_playback()['is_playing']:
         spotify.pause_playback()
         return f"Paused the current track.\n"
     else:
         return f"Playback is already paused.\n"
 
-@tool
-def play():
+@with_spotify_auth
+def play(spotify):
     '''Plays the current track in the user's Spotify queue.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     if not spotify.current_playback()['is_playing']:
         spotify.start_playback()
         return f"Playing the current track.\n"
     else:
         return f"The current track is already playing.\n"
     
-@tool
-def search(input: str):
+@with_spotify_auth
+def search(spotify, input: str):
     '''Takes in a user's request and finds songs, albums, artists, or playlists that match the query.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     results = spotify.search(q=input, limit=2, type='track,album,artist,playlist')
     songs = '\n'.join([f"{result['name']} by {result['artists'][0]['name']}\nURI: {result['uri']}" for result in results['tracks']['items']])
     albums = '\n'.join([f"{result['name']} by {result['artists'][0]['name']}\nURI: {result['uri']}" for result in results['albums']['items']])
@@ -91,10 +85,9 @@ def search(input: str):
 
     return f"Search results for '{input}':\nSongs:\n{songs}\n\nAlbums:\n{albums}\n\nArtists:\n{artists}\n\nPlaylists:\n{playlists}\n"
 
-@tool
-def narrow_search(song_uris: list, album_uris: list, artist_uris: list, playlist_uris: list):
+@with_spotify_auth
+def narrow_search(spotify, song_uris: list, album_uris: list, artist_uris: list, playlist_uris: list):
     '''Takes in all URI values from the results of a search query and narrows down the search to items that are saved in the user's Spotify account or artists that the user follows.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     track_uris = song_uris
     saved_tracks = []
     if song_uris:
@@ -113,12 +106,6 @@ def narrow_search(song_uris: list, album_uris: list, artist_uris: list, playlist
         followed_artists_uris = spotify.current_user_following_artists(ids=artist_uris)
         followed_artists = [uri for i, uri in enumerate(artist_uris) if followed_artists_uris[i]]
         followed_artists = [spotify.artist(artist_id=artist_uri)['name'] for artist_uri in followed_artists]
-    
-    # followed_playlists = []
-    # if playlist_uris:
-    #     followed_playlists_uris = [spotify.playlist_is_following(playlist_id=playlist_uri.split(':')[-1], user_ids=[spotify.current_user()['id']]) for playlist_uri in playlist_uris]
-    #     followed_playlists = [uri for i, uri in enumerate(playlist_uris) if followed_playlists_uris[i]]
-    #     followed_playlists = [spotify.playlist(playlist_id=playlist_uri, fields='name')['name'] for playlist_uri in followed_playlists]
 
     my_playlists = []
     user_playlists = spotify.current_user_playlists()
@@ -151,8 +138,8 @@ def narrow_search(song_uris: list, album_uris: list, artist_uris: list, playlist
 #     spotify.start_playback(uris=[spotify.search(q=song_name, limit=1, type='track')['tracks']['items'][0]['uri']])
 #     return f"Playing {song_name}.\n"
 
-@tool
-def play_song(song_uri: str):
+@with_spotify_auth
+def play_song(spotify, song_uri: str):
     '''Plays a song with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(uris=[song_uri])
@@ -164,8 +151,8 @@ def play_song(song_uri: str):
 #     spotify.start_playback(context_uri=spotify.search(q=album_name, limit=1, type='album')['albums']['items'][0]['uri'])
 #     return f"Playing {album_name}.\n"
 
-@tool
-def play_album(album_uri: str):
+@with_spotify_auth
+def play_album(spotify, album_uri: str):
     '''Plays an album with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(context_uri=album_uri)
@@ -178,8 +165,8 @@ def play_album(album_uri: str):
 #     spotify.start_playback(context_uri=f"spotify:artist:{artist_id}")
 #     return f"Playing {artist_name}.\n"
 
-@tool
-def play_artist(artist_uri: str):
+@with_spotify_auth
+def play_artist(spotify, artist_uri: str):
     '''Plays an artist with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(context_uri=artist_uri)
@@ -192,15 +179,15 @@ def play_artist(artist_uri: str):
 #     spotify.start_playback(context_uri=f"spotify:playlist:{playlist_id}")
 #     return f"Playing {playlist_name}.\n"
 
-@tool
-def play_playlist(playlist_uri: str):
+@with_spotify_auth
+def play_playlist(spotify, playlist_uri: str):
     '''Plays a playlist with the given URI on the user's Spotify account.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.start_playback(context_uri=playlist_uri)
     return f"Playing playlist.\n"
 
-@tool
-def queue_song(song_name: str):
+@with_spotify_auth
+def queue_song(spotify, song_name: str):
     '''Queues a song with the given name to the user's Spotify queue.'''
     spotify = spotipy.Spotify(auth=session['spotify_access_token'])
     spotify.add_to_queue(song_name)
