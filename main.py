@@ -25,7 +25,7 @@ auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
 spotify = None
 
 @app.route('/callback', methods=['GET'])
-@cross_origin(origins=['http://localhost:5173'], allow_headers=['content-type', 'authorization'], expose_headers=['Authorization'])
+@cross_origin(origins=['http://localhost:5173'], allow_headers=['content-type', 'authorization'], expose_headers=['*'])
 def callback():
     code = request.args['code']
     token = auth_manager.get_access_token(code=code)['access_token']
@@ -40,7 +40,7 @@ def callback():
     return response
 
 @app.route('/login', methods=['GET'])
-@cross_origin(origins=['http://localhost:5173'], allow_headers=['content-type', 'authorization'], expose_headers=['Authorization'])
+@cross_origin(origins=['http://localhost:5173'], allow_headers=['content-type', 'authorization'], expose_headers=['*'])
 def login():
     response = redirect(auth_manager.get_authorize_url())
     response.headers['Access-Control-Allow-Origin'] = '*'
