@@ -28,7 +28,7 @@ spotify = None
 #     return spotipy.Spotify(token, auth_manager=auth_manager)
 
 # @cross_origin()
-@app.route('/callback', methods=['GET'])
+@app.route('/callback', methods=['GET, POST, PUT, DELETE'], )
 def callback():
     token = auth_manager.get_access_token(request.args['code'])['access_token']
     # return token
@@ -37,12 +37,18 @@ def callback():
     # spotify = spotipy.Spotify(auth=token, auth_manager=auth_manager)
     spotify = spotipy.Spotify(auth=token)
     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
-    return redirect('http://localhost:5173/')
+    response = redirect('http://localhost:5173/')
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    return response
 
 # @cross_origin()
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET, POST, PUT, DELETE'])
 def login():
-    return redirect(auth_manager.get_authorize_url())
+    response = redirect(auth_manager.get_authorize_url())
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    return response
 
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 
