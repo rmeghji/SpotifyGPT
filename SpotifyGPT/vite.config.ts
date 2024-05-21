@@ -17,24 +17,9 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // '/login': {
-      //   target: 'https://spotifygpt-1267e7132268.herokuapp.com/login',
-      //   changeOrigin: true,
-      //   secure: false,
-      //   // rewrite: (path) => path.replace(/^\/login/, '/login')
-      //   // rewrite: (path) => path.replace(/^\/api/, '')
-      // },
-      // '/callback': {
-      //   target: 'https://spotifygpt-1267e7132268.herokuapp.com/callback',
-      //   changeOrigin: true,
-      //   secure: false,
-      //   // rewrite: (path) => path.replace(/^\/callback/, '/callback')
-      //   // rewrite: (path) => path.replace(/^\/api/, '')
-      // }
       '/api': {
         target: 'https://spotifygpt-1267e7132268.herokuapp.com',
         changeOrigin: true,
-        secure: false,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
