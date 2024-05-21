@@ -8,7 +8,7 @@ from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
-from flask import Flask, jsonify, redirect, request, Blueprint
+from flask import Flask, jsonify, redirect, request, Blueprint, session
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
@@ -129,6 +129,9 @@ def main():
 # @app.route('/', methods=['POST'])
 @app_bp.route('/', methods=['POST'])
 def chat():
+    if 'spotify_access_token' not in session:
+        return jsonify({'error': 'User not authenticated'}), 401
+
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
     chat_history.extend(
