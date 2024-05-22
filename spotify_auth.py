@@ -39,8 +39,8 @@ class SpotifyManager:
 
         # response = redirect('http://localhost:5173/')
         session['spotify_access_token'] = token
-        # response = redirect('http://localhost:5173/')
-        response = redirect(url_for('app'))
+        response = redirect('http://localhost:5173/')
+        # response = redirect(url_for('app'))
         # response = redirect(url_for('app.chat'))
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
@@ -49,7 +49,7 @@ class SpotifyManager:
 
     # @app.route('/login', methods=['GET'])
     @api_bp.route('/login', methods=['GET'])
-    @cross_origin(origins=['http://localhost:5173'])
+    @cross_origin(origins=['http://localhost:5173/'])
     def login():
         # response = redirect(self.auth_manager.get_authorize_url())
         response = redirect(SpotifyManager.get_instance().auth_manager.get_authorize_url())
