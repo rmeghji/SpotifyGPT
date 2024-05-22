@@ -1,5 +1,5 @@
 # spotify_auth.py
-from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify
+from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify, current_app
 from flask_cors import cross_origin
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -45,6 +45,7 @@ class SpotifyManager:
         # session['spotify_access_token'] = token
 
         response = redirect('http://localhost:5173')
+        # response = redirect()
         # response = redirect(url_for('app'))
         # response = redirect(url_for('app.chat'))
         response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173, https://accounts.spotify.com/authorize'
