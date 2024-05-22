@@ -25,6 +25,7 @@ class SpotifyManager:
         token = self.auth_manager.get_access_token(code=code)['access_token']
         self.spotify = spotipy.Spotify(auth=token, auth_manager=self.auth_manager)
         session['spotify_access_token'] = token
+        session.modified = True
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
     
     # @app.route('/callback', methods=['GET'])
