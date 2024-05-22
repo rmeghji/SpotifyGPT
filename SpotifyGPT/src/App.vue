@@ -33,7 +33,7 @@ export default {
   methods: {
     sendMessage() {
       this.tempInput = this.userInput
-      axios.post('/api/', { input: this.userInput })
+      axios.post('/api/chat', { input: this.userInput })
       .then(response => {
         this.chatResponse = response.data.response
         this.tempInput = ''
