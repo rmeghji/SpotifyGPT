@@ -21,6 +21,38 @@
 <script lang="ts">
 import axios from 'axios'
 
+// Create custom axios instance for redirecting - used for login
+const axiosRedirector = axios.create()
+// axiosRedirector.defaults.maxRedirects = 0
+axiosRedirector.interceptors.response.use(
+  // response => response,
+  // error => {
+  //   if(error.status == 301 || error.status == 302){
+  //     const url = error.response.headers.location
+  //     window.location.href = url
+  //     return Promise.reject({ canceled: true })
+  //     // return axiosRedirector.get(url)
+  //   }
+  //   return Promise.reject(error)
+  // }
+  (response) => {
+    console.log(response)
+    if(response.status == 301 || response.status == 302){
+      console.log("301 or 302")
+      window.location.href = response.headers.location
+      // return Promise.reject({ canceled: true })
+      // return axiosRedirector.get(url)
+    }
+    return response
+  },
+  (error) => {
+    console.log(error)
+    console.log(error.request.responseURL)
+    // window.location.href = error.request.responseURL
+    return Promise.reject(error)
+  }
+)
+
 export default {
   data() {
     return {
@@ -46,7 +78,15 @@ export default {
       })
     },
     login() {
-      window.location.href = '/api/login'
+      // window.location.href = '/api/login'
+      // axiosRedirector.get('/api/login', { withCredentials: true })
+      axiosRedirector.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error("weeooo error")
+      })
     }
   }
 }

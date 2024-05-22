@@ -49,7 +49,7 @@ class SpotifyManager:
 
     # @app.route('/login', methods=['GET'])
     @api_bp.route('/login', methods=['GET'])
-    @cross_origin(origins=['http://localhost:5173/'])
+    @cross_origin(origins=['http://localhost:5173/'], supports_credentials=True)
     def login():
         # response = redirect(self.auth_manager.get_authorize_url())
         response = redirect(SpotifyManager.get_instance().auth_manager.get_authorize_url())
