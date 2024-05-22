@@ -29,31 +29,60 @@ class SpotifyManager:
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
     
     # @app.route('/callback', methods=['GET'])
-    @api_bp.route('/callback', methods=['GET'])
-    @cross_origin(origins=['http://localhost:5173, https://accounts.spotify.com/authorize'])
+    # @api_bp.route('/callback', methods=['GET'])
+    # @cross_origin(origins=['http://localhost:5173, https://accounts.spotify.com/authorize'])
+    # def callback():
+    #     code = request.args['code']
+    #     # token = self.auth_manager.get_access_token(code=code)['access_token']
+    #     # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
+
+    #     # global spotify
+    #     # spotify = spotipy.Spotify(auth=token)
+
+    #     print(SpotifyManager.get_instance().authenticate(code))
+
+    #     # print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
+
+    #     # session['spotify_access_token'] = token
+
+    #     response = redirect('http://localhost:5173')
+    #     # response = redirect()
+    #     # response = redirect(url_for('app'))
+    #     # response = redirect(url_for('app.chat'))
+    #     response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173, https://accounts.spotify.com/authorize'
+    #     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    #     response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
+    #     response.headers['Access-Control-Allow-Credentials'] = 'true'
+    #     return response
+
+    @api_bp.route('/callback', methods=['POST'])
+    @cross_origin(origins=['http://localhost:5173/callback'], supports_credentials=True)
     def callback():
-        code = request.args['code']
+        '''New callback method that is called from frontend after user logs in to Spotify, taking in the code from the URL.'''
+        # code = request.args['code']
+        code = request.form['code']
         # token = self.auth_manager.get_access_token(code=code)['access_token']
         # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
 
         # global spotify
         # spotify = spotipy.Spotify(auth=token)
 
-        print(SpotifyManager.get_instance().authenticate(code))
+        return jsonify({'login_status': SpotifyManager.get_instance().authenticate(code)})
 
-        # print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
+        # # print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
 
-        # session['spotify_access_token'] = token
+        # # session['spotify_access_token'] = token
 
-        response = redirect('http://localhost:5173')
-        # response = redirect()
-        # response = redirect(url_for('app'))
-        # response = redirect(url_for('app.chat'))
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173, https://accounts.spotify.com/authorize'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
-        return response
+        # # response = redirect('http://localhost:5173')
+        # # response = redirect()
+        # # response = redirect(url_for('app'))
+        # # response = redirect(url_for('app.chat'))
+        # # response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173, https://accounts.spotify.com/authorize'
+        # response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173/callback'
+        # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
+        # response.headers['Access-Control-Allow-Credentials'] = 'true'
+        # return response
 
     # @app.route('/login', methods=['GET'])
     # @api_bp.route('/login', methods=['GET'])

@@ -85,8 +85,8 @@ export default {
       .then(response => {
         // console.log(response)
         console.log(response.data.url)
-        window.location.href = response.data.url
-        // window.open(response.data.url, '_blank', 'width=800,height=600')
+        // window.location.href = response.data.url
+        window.open(response.data.url, '_blank', 'width=800,height=600')
       })
       .catch(error => {
         console.error("weeooo error")
