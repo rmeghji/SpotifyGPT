@@ -33,8 +33,9 @@ export default {
   methods: {
     sendMessage() {
       this.tempInput = this.userInput
-      axios.post('/api/chat', { input: this.userInput })
+      axios.post('/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } }, { withCredentials: true })
       .then(response => {
+        console.log(response)
         this.chatResponse = response.data.response
         this.tempInput = ''
         this.chatHistory.push({ user: this.userInput, gpt: this.chatResponse })

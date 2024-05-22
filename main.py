@@ -130,8 +130,8 @@ def main():
 @app_bp.route('/chat', methods=['POST'])
 def chat():
     if 'spotify_access_token' not in session:
-        # return jsonify({'error': 'User not authenticated'}), 401
-        return redirect(url_for('api.login'))
+        return jsonify({'error': 'User not authenticated'}), 401
+        # return redirect(url_for('api.login'))
 
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
