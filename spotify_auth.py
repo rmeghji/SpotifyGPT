@@ -45,6 +45,7 @@ class SpotifyManager:
         response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
     # @app.route('/login', methods=['GET'])
@@ -56,4 +57,5 @@ class SpotifyManager:
         response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = '*'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
