@@ -42,7 +42,7 @@ class SpotifyManager:
         response = redirect('http://localhost:5173/')
         # response = redirect(url_for('app'))
         # response = redirect(url_for('app.chat'))
-        # response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173/'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
         return response
@@ -53,7 +53,7 @@ class SpotifyManager:
     def login():
         # response = redirect(self.auth_manager.get_authorize_url())
         response = redirect(SpotifyManager.get_instance().auth_manager.get_authorize_url())
-        # response.headers['Access-Control-Allow-Origin'] = 
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173/'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = '*'
         return response
