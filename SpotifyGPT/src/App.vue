@@ -80,7 +80,8 @@ export default {
     login() {
       // window.location.href = '/api/login'
       // axiosRedirector.get('/api/login', { withCredentials: true })
-      axiosRedirector.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
+      // axiosRedirector.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
+      axiosRedirector.get('', { withCredentials: true })
       .then(response => {
         console.log(response)
       })
