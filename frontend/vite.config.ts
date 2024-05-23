@@ -18,7 +18,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
+      '/SpotifyGPT/api': {
         target: 'https://spotifygpt-1267e7132268.herokuapp.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')

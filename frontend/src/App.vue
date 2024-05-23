@@ -65,7 +65,7 @@ export default {
   methods: {
     sendMessage() {
       this.tempInput = this.userInput
-      axios.post('/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
+      axios.post('/SpotifyGPT/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
         this.chatResponse = response.data.response
         this.tempInput = ''
@@ -80,7 +80,7 @@ export default {
       // window.location.href = '/api/login'
       // axiosRedirector.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
       // axiosRedirector.get('', { withCredentials: true })
-      axios.get('/api/login', { withCredentials: true })
+      axios.get('/SpotifyGPT/api/login', { withCredentials: true })
       .then(response => {
         // console.log(response)
         window.location.href = response.data.url
