@@ -2,11 +2,11 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import axios from 'axios'
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(import.meta.env.BASE_URL),
     routes: [
         { path: `/${import.meta.env.BASE_URL}/`, component: App },
         { path: `/${import.meta.env.BASE_URL}/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
