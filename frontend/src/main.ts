@@ -9,7 +9,7 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         { path: `/`, component: App },
-        { path: `/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
+        { path: `/${import.meta.env.BASE_URL}/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
             try {
                 // const response = await axios.post('/api/callback',
                 //     { code: to.query.code })
