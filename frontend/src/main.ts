@@ -14,7 +14,9 @@ const router = createRouter({
                 //     { code: to.query.code })
                 // next(`/${import.meta.env.BASE_URL}`)
                 const urlParams = new URLSearchParams(window.location.search);
+                console.log(urlParams);
                 const code = urlParams.get('code');
+                console.log(code);
 
                 if (code) {
                     await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback', { code: code });
