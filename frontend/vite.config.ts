@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
   ],
-  base: '/SpotifyGPT',
+  base: '/SpotifyGPT/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

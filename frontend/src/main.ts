@@ -8,7 +8,7 @@ import axios from 'axios'
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        { path: `/${import.meta.env.BASE_URL}`, component: App, async beforeEnter(to: any, from: any, next: any){
+        { path: `/${import.meta.env.BASE_URL}/`, component: App, async beforeEnter(to: any, from: any, next: any){
             try {
                 const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
                     { code: to.query.code })
