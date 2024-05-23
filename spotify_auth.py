@@ -60,7 +60,8 @@ class SpotifyManager:
     def callback():
         '''New callback method that is called from frontend after user logs in to Spotify, taking in the code from the URL.'''
         # code = request.args['code']
-        code = request.form['code']
+        # code = request.form['code']
+        code = request.get_json()['code']
         # token = self.auth_manager.get_access_token(code=code)['access_token']
         # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
 

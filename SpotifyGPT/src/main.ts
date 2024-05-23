@@ -9,12 +9,12 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', component: App },
-        { path: '/callback', async beforeEnter(to: any, from: any, next: any) {
+        { path: '/callback', component: App, async beforeEnter(to: any, from: any, next: any) {
             try {
-                if(to.method === 'GET') {
-                    const response = await axios.post('/api/callback', { 'code': new URLSearchParams(location.search).get('code') })
-                    console.log(response.data.login_status)
-                }
+                console.log(to)
+                console.log(to.query.code)
+                const response = await axios.post('/api/callback', { 'code': new URLSearchParams(to.query.code) })
+                console.log(response.data.login_status)
                 next('/')
             }
             catch(err) {
@@ -25,4 +25,6 @@ const router = createRouter({
     ],
 })
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
