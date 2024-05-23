@@ -41,7 +41,6 @@ axiosRedirector.interceptors.response.use(
       console.log("301 or 302")
       window.location.href = response.headers.location
       // return Promise.reject({ canceled: true })
-      // return axiosRedirector.get(url)
     }
     return response
   },
@@ -77,12 +76,8 @@ export default {
       })
     },
     login() {
-      // window.location.href = '/api/login'
-      // axiosRedirector.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
-      // axiosRedirector.get('', { withCredentials: true })
       axios.get('/SpotifyGPT/api/login', { withCredentials: true })
       .then(response => {
-        // console.log(response)
         window.location.href = response.data.url
         // window.open(response.data.url, '_blank', 'width=800,height=600')
       })
