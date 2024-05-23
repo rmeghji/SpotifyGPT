@@ -21,7 +21,6 @@ export default defineConfig({
       '/SpotifyGPT/api': {
         target: 'https://spotifygpt-1267e7132268.herokuapp.com',
         changeOrigin: true,
-        secure: false,
         // rewrite: (path) => path.replace(/^\/api/, '')
         rewrite: (path) => path.replace(/^\/SpotifyGPT\/api/, '')
 
