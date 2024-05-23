@@ -10,7 +10,6 @@ export default defineConfig({
     vue(),
     vueJsx(),
   ],
-  base: '/SpotifyGPT/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -18,11 +17,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/SpotifyGPT/api': {
+      '/api': {
         target: 'https://spotifygpt-1267e7132268.herokuapp.com',
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, '')
-        rewrite: (path) => path.replace(/^\/SpotifyGPT\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, '')
 
       }
     }

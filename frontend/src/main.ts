@@ -8,7 +8,7 @@ import axios from 'axios'
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        { path: `/${import.meta.env.BASE_URL}/`, component: App, async beforeEnter(to: any, from: any, next: any){
+        { path: `/`, component: App, async beforeEnter(to: any, from: any, next: any){
             console.log("beforeEnter")
             try {
                 // const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
@@ -23,24 +23,24 @@ const router = createRouter({
                     await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback', { code: code });
                     // next(`/${import.meta.env.BASE_URL}/`);
                 }
-                next(`/${import.meta.env.BASE_URL}/`);
+                next(`/`);
             }
             catch(err) {
                 console.error(err)
-                next(`/${import.meta.env.BASE_URL}`)
+                next(`/`)
             }
         }},
-        { path: `/${import.meta.env.BASE_URL}/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
+        { path: `/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
             try {
                 // const response = await axios.post('/api/callback',
                 //     { code: to.query.code })
                 const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
                     { code: to.query.code })
-                next(`/${import.meta.env.BASE_URL}/`)
+                next(`/`)
             }
             catch(err) {
                 console.error(err)
-                next(`/${import.meta.env.BASE_URL}/`)
+                next(`/`)
             }
         }}
     ],
