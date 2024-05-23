@@ -7,7 +7,7 @@
       <button @click="login">Login to Spotify</button>
     </div>
     <div class="main-chat">
-      <div v-for="chat in chatHistory" :key="chat">
+      <div v-for="chat in chatHistory" key="chat">
         <p class="user">{{ chat['user'] }}</p>
         <p class="gpt">{{ chat['gpt'] }}</p>
       </div>
@@ -65,9 +65,8 @@ export default {
   methods: {
     sendMessage() {
       this.tempInput = this.userInput
-      axios.post('/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } }, { withCredentials: true })
+      axios.post('/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
-        console.log(response)
         this.chatResponse = response.data.response
         this.tempInput = ''
         this.chatHistory.push({ user: this.userInput, gpt: this.chatResponse })
@@ -84,9 +83,8 @@ export default {
       axios.get('/api/login', { withCredentials: true })
       .then(response => {
         // console.log(response)
-        console.log(response.data.url)
-        // window.location.href = response.data.url
-        window.open(response.data.url, '_blank', 'width=800,height=600')
+        window.location.href = response.data.url
+        // window.open(response.data.url, '_blank', 'width=800,height=600')
       })
       .catch(error => {
         console.error("weeooo error")
