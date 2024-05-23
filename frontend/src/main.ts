@@ -10,9 +10,16 @@ const router = createRouter({
     routes: [
         { path: `/${import.meta.env.BASE_URL}/`, component: App, async beforeEnter(to: any, from: any, next: any){
             try {
-                const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
-                    { code: to.query.code })
-                next(`/${import.meta.env.BASE_URL}`)
+                // const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
+                //     { code: to.query.code })
+                // next(`/${import.meta.env.BASE_URL}`)
+                const urlParams = new URLSearchParams(to.fullPath);
+                const code = urlParams.get('code');
+
+                if (code) {
+                    await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback', { code: code });
+                    next(`/${import.meta.env.BASE_URL}/`);
+                }
             }
             catch(err) {
                 console.error(err)
