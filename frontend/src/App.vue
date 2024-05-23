@@ -22,25 +22,6 @@
 import axios from 'axios'
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    console.log("beforeRouteEnter")
-    try {
-      // const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
-      //     { code: to.query.code })
-      // next(`/${import.meta.env.BASE_URL}`)
-      const urlParams = new URLSearchParams(window.location.search);
-      console.log(urlParams);
-      const code = urlParams.get('code');
-      console.log(code);
-
-      axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback', { code: code });
-      next(`/${import.meta.env.BASE_URL}/`);
-    }
-    catch(err) {
-        console.error(err)
-        next(`/${import.meta.env.BASE_URL}`)
-    }
-  },
   data() {
     return {
       userInput: '',
