@@ -106,7 +106,7 @@ class SpotifyManager:
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
         response = jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()})
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173/, https://rmeghji.github.io'
+        response.headers['Access-Control-Allow-Origin'] = 'https://rmeghji.github.io'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
         return response
