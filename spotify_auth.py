@@ -56,7 +56,7 @@ class SpotifyManager:
     #     return response
 
     @api_bp.route('/callback', methods=['POST'])
-    @cross_origin(origins=['http://localhost:5173/callback'], supports_credentials=True)
+    # @cross_origin()
     def callback():
         '''New callback method that is called from frontend after user logs in to Spotify, taking in the code from the URL.'''
         # code = request.args['code']

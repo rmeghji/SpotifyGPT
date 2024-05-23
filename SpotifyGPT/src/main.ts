@@ -13,7 +13,9 @@ const router = createRouter({
             try {
                 console.log(to)
                 console.log(to.query.code)
-                const response = await axios.post('/api/callback', { 'code': new URLSearchParams(to.query.code) })
+                const response = await axios.post('/api/callback',
+                    { headers: { 'Content-Type': 'application/json' } },
+                    { code: new URLSearchParams(to.query.code) })
                 console.log(response.data.login_status)
                 next('/')
             }
