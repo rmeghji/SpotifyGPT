@@ -78,7 +78,7 @@ export default {
     },
     login() {
       // axios.get('/SpotifyGPT/api/login', { withCredentials: true })
-      axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
+      axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login')
       .then(response => {
         window.location.href = response.data.url
         // window.open(response.data.url, '_blank', 'width=800,height=600')
