@@ -102,7 +102,7 @@ class SpotifyManager:
     #     return response
 
     @api_bp.route('/login', methods=['GET'])
-    @cross_origin(origins=['http://localhost:5173/'], supports_credentials=True)
+    @cross_origin(origins=['http://localhost:5173/, https://rmeghji.github.io/SpotifyGPT/'], supports_credentials=True)
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
         # response = redirect(self.auth_manager.get_authorize_url())
