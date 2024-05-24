@@ -16,6 +16,8 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios'
+
 export default {
     data() {
       return {
@@ -25,7 +27,7 @@ export default {
         tempInput: ''
       }
     },
-    created(this: ComponentPublicInstance){
+    created(this){
         try {
             const { code } = this.$route.query;
             const response = axios.post(
