@@ -3,18 +3,18 @@
 
 <template>
   <div class="container">
-    <div class="login-button">
-      <button @click="login">Login to Spotify</button>
-    </div>
-    <div class="main-chat">
-      <div v-for="chat in chatHistory" key="chat">
-        <p class="user">{{ chat['user'] }}</p>
-        <p class="gpt">{{ chat['gpt'] }}</p>
-      </div>
-      <p class="user">{{ tempInput }}</p>
-      <br/>
-      <input type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Message"/>
-    </div>
+	<div class="login-button">
+	  <button @click="login">Login to Spotify</button>
+	</div>
+	<div class="main-chat">
+	  <div v-for="chat in chatHistory" key="chat">
+		<p class="user">{{ chat['user'] }}</p>
+		<p class="gpt">{{ chat['gpt'] }}</p>
+	  </div>
+	  <p class="user">{{ tempInput }}</p>
+	  <br/>
+	  <input type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Message"/>
+	</div>
   </div>
 </template>
 
@@ -23,38 +23,38 @@ import axios from 'axios'
 
 export default {
   data() {
-    return {
-      userInput: '',
-      chatResponse: '',
-      chatHistory: [{ user: '', gpt: 'Hello! How can I help you today?'}],
-      tempInput: ''
-    }
+	return {
+	  userInput: '',
+	  chatResponse: '',
+	  chatHistory: [{ user: '', gpt: 'Hello! How can I help you today?'}],
+	  tempInput: ''
+	}
   },
   methods: {
-    sendMessage() {
-      this.tempInput = this.userInput
-      // axios.post('/SpotifyGPT/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
-      axios.post('https://spotifygpt-1267e7132268.herokuapp.com/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
-      .then(response => {
-        this.chatResponse = response.data.response
-        this.tempInput = ''
-        this.chatHistory.push({ user: this.userInput, gpt: this.chatResponse })
-        this.userInput = ''
-      })
-      .catch(error => {
-        console.error(error)
-      })
-    },
-    login() {
-      // axios.get('/SpotifyGPT/api/login', { withCredentials: true })
-      axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
-      .then(response => {
-        window.location.href = response.data.url
-      })
-      .catch(error => {
-        console.error(error)
-      })
-    }
+	sendMessage() {
+	  this.tempInput = this.userInput
+	  // axios.post('/SpotifyGPT/api/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
+	  axios.post('https://spotifygpt-1267e7132268.herokuapp.com/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
+	  .then(response => {
+		this.chatResponse = response.data.response
+		this.tempInput = ''
+		this.chatHistory.push({ user: this.userInput, gpt: this.chatResponse })
+		this.userInput = ''
+	  })
+	  .catch(error => {
+		console.error(error)
+	  })
+	},
+	login() {
+	  // axios.get('/SpotifyGPT/api/login', { withCredentials: true })
+	  axios.get('https://spotifygpt-1267e7132268.herokuapp.com/login', { withCredentials: true })
+	  .then(response => {
+		window.location.href = response.data.url
+	  })
+	  .catch(error => {
+		console.error(error)
+	  })
+	}
   }
 }
 </script>
