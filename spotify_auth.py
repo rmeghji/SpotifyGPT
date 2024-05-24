@@ -28,7 +28,7 @@ class SpotifyManager:
         session.modified = True
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
 
-    @api_bp.route('/callback', methods=['POST'])
+    @api_bp.route('/callback', methods=['POST, OPTIONS'])
     @cross_origin(origins=['http://localhost:5173/, https://spotifygpt.pages.dev/'], supports_credentials=True)
     def callback():
         '''New callback method that is called from frontend after user logs in to Spotify, taking in the code from the URL.'''
