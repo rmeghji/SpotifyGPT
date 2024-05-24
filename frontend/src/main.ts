@@ -13,11 +13,11 @@ const router = createRouter({
             try {
                 const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
                     { code: to.query.code })
-                // next(`/`)
+                next(`/`)
             }
             catch(err) {
                 console.error(err)
-                // next(`/`)
+                next(`/`)
             }
         }}
     ],
