@@ -1,5 +1,5 @@
 # spotify_auth.py
-from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify, current_app
+from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify, current_app, make_response
 from flask_cors import cross_origin, CORS
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -49,7 +49,9 @@ class SpotifyManager:
         session['spotify_access_token'] = token
         session.modified = True
 
-        response = jsonify({'login_status': status})
+        response = make_response(jsonify({'login_status': status}))
+
+        # response = jsonify({'login_status': status})
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
         # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
@@ -61,7 +63,7 @@ class SpotifyManager:
     @cross_origin()
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
-        response = jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()})
+        response = make_response(jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()}))
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
         # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
