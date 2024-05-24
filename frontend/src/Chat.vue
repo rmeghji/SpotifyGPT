@@ -28,7 +28,7 @@ export default {
     created(this: ComponentPublicInstance){
         try {
             const { code } = this.$route.query;
-            const response = await axios.post(
+            const response = axios.post(
                 'https://spotifygpt-1267e7132268.herokuapp.com/callback',
                 { code: code },
                 { responseType: 'json', withCredentials: true }
