@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
+import Chat from './Chat.vue';
 
 const router = useRouter()
 const route = useRoute()
@@ -18,6 +19,7 @@ const route = useRoute()
 	  <p class="user">{{ tempInput }}</p>
 	  <br/>
 	  <input type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Message"/>
+	  <Chat></Chat>
 	</div>
   </div>
 </template>
