@@ -11,15 +11,13 @@ const router = createRouter({
         { path: `/`, component: App },
         { path: `/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
             try {
-                // const response = await axios.post('/api/callback',
-                //     { code: to.query.code })
                 const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
                     { code: to.query.code })
-                next(`/`)
+                // next(`/`)
             }
             catch(err) {
                 console.error(err)
-                next(`/`)
+                // next(`/`)
             }
         }}
     ],
