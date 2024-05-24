@@ -12,7 +12,7 @@ const router = createRouter({
         { path: `/callback`, component: App, async beforeEnter(to: any, from: any, next: any) {
             try {
                 const response = await axios.post('https://spotifygpt-1267e7132268.herokuapp.com/callback',
-                    { code: to.query.code, withCredentials: true },)
+                    { code: to.query.code }, { withCredentials: true, responseType: 'json' },)
                 next(`/`)
             }
             catch(err) {
