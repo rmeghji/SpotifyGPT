@@ -13,7 +13,7 @@ CORS(app,
      supports_credentials=True,
      origins=['http://localhost:5173/', 'https://spotifygpt.pages.dev/'],
      allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
      )
 
 if __name__ == '__main__':
