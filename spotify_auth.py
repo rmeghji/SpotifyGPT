@@ -51,9 +51,9 @@ class SpotifyManager:
 
         response = jsonify({'login_status': status})
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
+        # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
     @api_bp.route('/login', methods=['GET'])
@@ -62,8 +62,8 @@ class SpotifyManager:
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
         response = jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()})
-        response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
+        # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
+        # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
