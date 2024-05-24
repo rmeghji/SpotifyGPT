@@ -112,4 +112,5 @@ class SpotifyManager:
         response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
