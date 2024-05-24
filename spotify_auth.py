@@ -68,10 +68,13 @@ class SpotifyManager:
         # global spotify
         # spotify = spotipy.Spotify(auth=token)
 
-        print(f"code: {code}")
+        # print(f"code: {code}")
 
         status = SpotifyManager.get_instance().authenticate(code)
-        print(f"status: {status}")
+        token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
+        session['spotify_access_token'] = token
+        session.modified = True
+        # print(f"status: {status}")
         return jsonify({'login_status': status})
 
         # # print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
