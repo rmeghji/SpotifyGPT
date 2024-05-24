@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 </script>
 
 <template>
@@ -27,7 +31,7 @@ export default {
         tempInput: ''
       }
     },
-    created(this){
+    created(this) {
         this.callback()
     },
     methods: {
