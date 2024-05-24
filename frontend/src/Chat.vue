@@ -28,17 +28,7 @@ export default {
       }
     },
     created(this){
-        try {
-            const { code } = this.$route.query;
-            const response = axios.post(
-                'https://spotifygpt-1267e7132268.herokuapp.com/callback',
-                { code: code },
-                { responseType: 'json', withCredentials: true }
-            )
-        }
-        catch(err) {
-            console.error(err)
-        }
+        this.callback()
     },
     methods: {
       sendMessage() {
@@ -54,6 +44,20 @@ export default {
         .catch(error => {
           console.error(error)
         })
+      },
+      callback() {
+        console.log('callback')
+        try {
+            const { code } = this.$route.query;
+            const response = axios.post(
+                'https://spotifygpt-1267e7132268.herokuapp.com/callback',
+                { code: code },
+                { responseType: 'json', withCredentials: true }
+            )
+        }
+        catch(err) {
+            console.error(err)
+        }
       }
     }
   }
