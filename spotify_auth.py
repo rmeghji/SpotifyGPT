@@ -35,7 +35,7 @@ class SpotifyManager:
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
 
     @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
-    @cross_origin()
+    @cross_origin(supports_credentials=True)
     # @cross_origin(origins=['http://localhost:5173/, https://spotifygpt.pages.dev'], supports_credentials=True, allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'])
     def callback():
         '''New callback method that is called from frontend after user logs in to Spotify, taking in the code from the URL.'''
@@ -61,7 +61,7 @@ class SpotifyManager:
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
         # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
     @api_bp.route('/login', methods=['GET'])
