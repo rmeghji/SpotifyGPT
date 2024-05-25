@@ -6,6 +6,7 @@ from spotipy.oauth2 import SpotifyOAuth
 # from run import app
 
 api_bp = Blueprint('api', __name__)
+CORS(api_bp, supports_credentials=True, allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'])
 
 class SpotifyManager:
     _instance = None
@@ -49,7 +50,7 @@ class SpotifyManager:
         session['spotify_access_token'] = token
         session.modified = True
 
-        response = make_response(jsonify({'login_status': status}), 200, {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': 'https://spotifygpt.pages.dev', 'Access-Control-Expose-Headers': 'Access-Control-Allow-Credentials'})
+        response = make_response(jsonify({'login_status': status}), 200, {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': 'https://spotifygpt.pages.dev'})
 
         # response = jsonify({'login_status': status})
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
