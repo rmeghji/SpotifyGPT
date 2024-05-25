@@ -19,7 +19,7 @@ const route = useRoute()
 	  <p class="user">{{ tempInput }}</p>
 	  <br/>
 	  <input type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Message"/>
-	  <Chat></Chat>
+	  <!-- <Chat></Chat> -->
 	</div>
   </div>
 </template>
