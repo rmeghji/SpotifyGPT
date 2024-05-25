@@ -12,7 +12,7 @@ app.register_blueprint(app_bp)
 CORS(app,
      supports_credentials=True,
      origins=['http://localhost:5173/', 'https://spotifygpt.pages.dev'],
-     allow_headers=['Access-Control-Allow-Origin', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Credentials'],
+     allow_headers=['Access-Control-Allow-Origin', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Credentials', 'Access-Control-Expose-Headers'],
      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
      )
 

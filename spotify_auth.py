@@ -49,7 +49,7 @@ class SpotifyManager:
         session['spotify_access_token'] = token
         session.modified = True
 
-        response = make_response(jsonify({'login_status': status}), 200, {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': 'https://spotifygpt.pages.dev'})
+        response = make_response(jsonify({'login_status': status}), 200, {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': 'https://spotifygpt.pages.dev', 'Access-Control-Expose-Headers': 'Access-Control-Allow-Credentials'})
 
         # response = jsonify({'login_status': status})
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
@@ -63,7 +63,8 @@ class SpotifyManager:
     @cross_origin()
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
-        response = make_response(jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()}), 200)
+        response = make_response(jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()}), 200, {'Access-Control-Allow-Credentials': 'true'})
+        # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
         # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
         # response.headers['Access-Control-Allow-Credentials'] = 'true'
