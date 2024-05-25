@@ -31,7 +31,7 @@ export default {
         tempInput: ''
       }
     },
-    created(this) {
+    created() {
         this.callback()
     },
     methods: {
