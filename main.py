@@ -128,7 +128,7 @@ def main():
 
 # @app.route('/', methods=['POST'])
 @app_bp.route('/chat', methods=['POST'])
-@cross_origin()
+@cross_origin(with_credentials=True, origins=['http://localhost:5173', 'https://spotifygpt.pages.dev'])
 def chat():
     print(f"token before chat: {session.get('spotify_access_token')}")
 

@@ -34,7 +34,7 @@ export default {
     methods: {
       sendMessage() {
         this.tempInput = this.userInput
-        axios.post('https://spotifygpt-1267e7132268.herokuapp.com/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' } })
+        axios.post('https://spotifygpt-1267e7132268.herokuapp.com/chat', { input: this.userInput }, { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
         .then(response => {
           this.chatResponse = response.data.response
           this.tempInput = ''
