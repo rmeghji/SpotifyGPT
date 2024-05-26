@@ -8,7 +8,7 @@ from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
-from flask import Flask, jsonify, redirect, request, Blueprint, session, make_response
+from flask import Flask, jsonify, redirect, request, Blueprint, session, make_response, current_app
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
@@ -134,9 +134,14 @@ def main():
 
 # @app.route('/', methods=['POST'])
 @app_bp.route('/chat', methods=['POST'])
-@cross_origin(supports_credentials=True, origins=['http://localhost:5173', 'https://spotifygpt.pages.dev'])
+@cross_origin(supports_credentials=True)
 def chat():
     print(f"token before chat: {session.get('spotify_access_token')}")
+    try:
+        sat = current_app.config['spotify_access_token']
+        print(f"token from current_app: {sat}")
+    except Exception as e:
+        print(f"error: {e}")
 
     if 'spotify_access_token' not in session:
         return jsonify({'error': 'User not authenticated'}), 401
