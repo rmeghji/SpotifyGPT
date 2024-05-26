@@ -55,6 +55,8 @@ class SpotifyManager:
         session['spotify_access_token'] = token
         session.modified = True
 
+        print(f"token immediately after auth: {session.get('spotify_access_token')}")
+
         response = make_response(jsonify({'login_status': status}), 200)
 
         # response = jsonify({'login_status': status})

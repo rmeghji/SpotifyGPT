@@ -130,6 +130,8 @@ def main():
 @app_bp.route('/chat', methods=['POST'])
 @cross_origin()
 def chat():
+    print(f"token before chat: {session.get('spotify_access_token')}")
+
     if 'spotify_access_token' not in session:
         return jsonify({'error': 'User not authenticated'}), 401
 
