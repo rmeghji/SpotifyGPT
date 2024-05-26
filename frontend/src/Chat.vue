@@ -31,7 +31,7 @@ export default {
         tempInput: ''
       }
     },
-    mounted() {
+    created(this: any) {
         console.log('callback')
         try {
             const { code } = this.$route.query;
