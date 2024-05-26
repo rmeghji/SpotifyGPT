@@ -9,13 +9,19 @@ from langchain.agents.format_scratchpad.openai_tools import format_to_openai_too
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
 from flask import Flask, jsonify, redirect, request, Blueprint, session, render_template, url_for
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin, make_response
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
 # from run import app
 from spotify_auth import SpotifyManager
 
 app_bp = Blueprint('app', __name__)
+CORS(app_bp,
+     supports_credentials=True,
+     allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'],
+     origins=['http://localhost:5173/', 'https://spotifygpt.pages.dev'],
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+     )
 
 # app = Flask(__name__)
 # CORS(app)
@@ -148,7 +154,9 @@ def chat():
                 ),
             ]
         )
-    return jsonify({'response': result['output']})
+    response = make_response(jsonify({'response': result['output']}), 200)
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    return response
 
 @app_bp.route('/')
 def index():
