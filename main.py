@@ -8,8 +8,8 @@ from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
-from flask import Flask, jsonify, redirect, request, Blueprint, session, render_template, url_for
-from flask_cors import CORS, cross_origin, make_response
+from flask import Flask, jsonify, redirect, request, Blueprint, session, make_response
+from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
 # from run import app
