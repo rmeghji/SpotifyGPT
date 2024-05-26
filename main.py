@@ -137,12 +137,7 @@ def main():
 @cross_origin(supports_credentials=True)
 def chat():
     print(f"token before chat: {session.get('spotify_access_token')}")
-    try:
-        sat = current_app.config['spotify_access_token']
-        print(f"token from current_app: {sat}")
-    except Exception as e:
-        print(f"error: {e}")
-
+    print(f"session var keys: {session.keys()}")
     if 'spotify_access_token' not in session:
         return jsonify({'error': 'User not authenticated'}), 401
 
