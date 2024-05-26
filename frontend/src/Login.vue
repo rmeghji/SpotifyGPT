@@ -1,39 +1,10 @@
-<script setup lang="ts">
-import { useRoute, useRouter, RouterView } from 'vue-router'
-import Chat from './Chat.vue';
-
-const router = useRouter()
-const route = useRoute()
-</script>
-
-<!-- <template>
-  <div class="container">
-	<div class="login-button">
-	  <button @click="login">Login to Spotify</button>
-	</div>
-	<div class="main-chat">
-	  <div v-for="chat in chatHistory" key="chat">
-		<p class="user">{{ chat['user'] }}</p>
-		<p class="gpt">{{ chat['gpt'] }}</p>
-	  </div>
-	  <p class="user">{{ tempInput }}</p>
-	  <br/>
-	  <input type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Message"/>
-	</div>
-  </div>
-
-  <RouterView />
-</template> -->
-
 <template>
-	<!-- <div class="container">
-		<nav>
-			<RouterLink to="/">Home</RouterLink>
-			<RouterLink to="/callback">About</RouterLink>
-		</nav>
-	</div> -->
-	<RouterView />
-  </template>
+    <div class="container">
+        <div class="login-button">
+	        <button @click="login">Login to Spotify</button>
+	    </div>
+    </div>
+</template>
 
 <script lang="ts">
 import axios from 'axios'
@@ -89,7 +60,7 @@ template {
   height: 100%;
   width: 100%;
 }
-input {
+/* input {
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px rgb(73, 73, 73);
@@ -97,13 +68,13 @@ input {
   justify-self: center;
   width: 100%;
   background-color: rgb(70, 70, 70);
-}
+} */
 
 input::placeholder {
   color: #d2d2d2;
 }
 
-.main-chat {
+/* .main-chat {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -115,11 +86,9 @@ input::placeholder {
 .gpt {
   text-emphasis: bold;
   color: #ffffff;
-}
+} */
 .login-button {
   display: flex;
-  /* align-self: flex-end; */
-  /* justify-content: flex-end; */
 }
 .login-button button {
   padding: 0.5rem;
