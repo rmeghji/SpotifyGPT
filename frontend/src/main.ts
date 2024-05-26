@@ -16,4 +16,5 @@ const router = createRouter({
 
 const app = createApp(App)
 app.use(router)
+app.component('chat', Chat)
 app.mount('#app')
