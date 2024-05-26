@@ -31,23 +31,23 @@ export default {
         tempInput: ''
       }
     },
-    created(this: any) {
-        console.log('callback')
-        try {
-            const { code } = this.$route.query;
-            axios.post(
-                'https://spotifygpt-1267e7132268.herokuapp.com/callback',
-                { code: code },
-                { responseType: 'json', withCredentials: true, headers: { 'Content-Type': 'application/json' } }
-            )
-            .then(response => {
-                console.log(response)
-            })
-        }
-        catch(err) {
-            console.error(err)
-        }
-    },
+    // created(this: any) {
+    //     console.log('callback')
+    //     try {
+    //         const { code } = this.$route.query;
+    //         axios.post(
+    //             'https://spotifygpt-1267e7132268.herokuapp.com/callback',
+    //             { code: code },
+    //             { responseType: 'json', withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+    //         )
+    //         .then(response => {
+    //             console.log(response)
+    //         })
+    //     }
+    //     catch(err) {
+    //         console.error(err)
+    //     }
+    // },
     methods: {
       sendMessage() {
         this.tempInput = this.userInput
