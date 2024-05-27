@@ -41,7 +41,6 @@ class SpotifyManager:
 
     @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
     @cross_origin(supports_credentials=True)
-    # @cross_origin(origins=['http://localhost:5173/, https://spotifygpt.pages.dev'], supports_credentials=True, allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'])
     def callback():
         '''New callback method that is called from frontend after user logs in to Spotify, taking in the code from the URL.'''
         code = request.get_json()['code']
@@ -60,19 +59,12 @@ class SpotifyManager:
         session['spotify_access_token'] = token
         session.modified = True
 
-        current_app.config['spotify_access_token'] = token
-
         print(f"token immediately after auth: {session.get('spotify_access_token')}")
         print(f"cookie domain in callback: {current_app.config['SESSION_COOKIE_DOMAIN']}")
 
         response = make_response(jsonify({'login_status': status}), 200)
-        # response = make_response(redirect(url_for('app.test')))
+        response.set_cookie('spotify_access_token', token, domain=current_app.config['SESSION_COOKIE_DOMAIN'])
 
-        # response = jsonify({'login_status': status})
-        # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
-        # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
-        # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
     @api_bp.route('/login', methods=['GET'])
@@ -80,11 +72,6 @@ class SpotifyManager:
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
         response = make_response(jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()}), 200)
-        # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
-        # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
-        print(f"cookie domain in login: {current_app.config['SESSION_COOKIE_DOMAIN']}")
-        # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     
     @api_bp.route('/test', methods=['GET'])
@@ -92,6 +79,4 @@ class SpotifyManager:
     def test():
         response = make_response(jsonify({'api_key': session.get('spotify_access_token')}), 200)
         session['test'] = 'test'
-        # response.headers['Access-Control-Allow-Credentials'] = 'true'
-        print(f"cookie domain in test: {current_app.config['SESSION_COOKIE_DOMAIN']}")
         return response
