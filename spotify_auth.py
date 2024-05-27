@@ -83,6 +83,7 @@ class SpotifyManager:
     @cross_origin()
     def test():
         response = make_response(jsonify({'api_key': session.get('spotify_access_token')}), 200)
+        session['test'] = 'test'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         print(f"cookie domain in test: {current_app.config['SESSION_COOKIE_DOMAIN']}")
         return response
