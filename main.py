@@ -13,6 +13,7 @@ from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
 # from run import app
+from spotify_auth import api_bp
 from spotify_auth import SpotifyManager
 
 app_bp = Blueprint('app', __name__)
@@ -133,7 +134,8 @@ def main():
         )
 
 # @app.route('/', methods=['POST'])
-@app_bp.route('/chat', methods=['POST'])
+# @app_bp.route('/chat', methods=['POST'])
+@api_bp.route('/chat', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def chat():
     print(f"token before chat: {session.get('spotify_access_token')}")
