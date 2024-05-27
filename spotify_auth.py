@@ -56,6 +56,7 @@ class SpotifyManager:
         session.modified = True
 
         print(f"token immediately after auth: {session.get('spotify_access_token')}")
+        print(f"cookie domain in callback: {current_app.config['SESSION_COOKIE_DOMAIN']}")
 
         response = make_response(jsonify({'login_status': status, 'access_token': token}), 200)
 
@@ -74,6 +75,7 @@ class SpotifyManager:
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
         # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
+        print(f"cookie domain in login: {current_app.config['SESSION_COOKIE_DOMAIN']}")
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
     
@@ -82,4 +84,5 @@ class SpotifyManager:
     def test():
         response = make_response(jsonify({'api_key': session.get('spotify_access_token')}), 200)
         response.headers['Access-Control-Allow-Credentials'] = 'true'
+        print(f"cookie domain in test: {current_app.config['SESSION_COOKIE_DOMAIN']}")
         return response
