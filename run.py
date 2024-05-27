@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev')
 app.config['SESSION_COOKIE_PATH'] = '/'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_DOMAIN'] = 'spotifygpt.pages.dev'
 app.register_blueprint(api_bp)
 app.register_blueprint(app_bp)
 CORS(app,
