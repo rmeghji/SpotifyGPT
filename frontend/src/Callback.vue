@@ -26,10 +26,17 @@ export default {
             )
             .then(response => {
                 console.log(response)
-                axios.post('https://spotifygpt-1267e7132268.herokuapp.com/chat', { input: 'hello' }, { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
+                // axios.post('https://spotifygpt-1267e7132268.herokuapp.com/chat', { input: 'hello' }, { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
+                // .then(response => {
+                //     const chatResponse = response.data.response
+                //     console.log(chatResponse)
+                // })
+                // .catch(error => {
+                //     console.error(error)
+                // })
+                axios.get('https://spotifygpt-1267e7132268.herokuapp.com/test', { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
                 .then(response => {
-                    const chatResponse = response.data.response
-                    console.log(chatResponse)
+                    console.log(response.data)
                 })
                 .catch(error => {
                     console.error(error)

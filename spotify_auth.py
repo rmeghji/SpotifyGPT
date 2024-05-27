@@ -76,3 +76,8 @@ class SpotifyManager:
         # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers, access-control-allow-credentials'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
+    
+    @api_bp.route('/test', methods=['GET'])
+    @cross_origin()
+    def test():
+        return make_response(jsonify({'api_key': session.get('spotify_access_token')}), 200)
