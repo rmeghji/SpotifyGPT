@@ -7,7 +7,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev')
-app.config['SESSION_COOKIE_PATH'] = '/'
+# app.config['SESSION_COOKIE_PATH'] = '/'
 app.config['SESSION_TYPE'] = 'filesystem'
 # app.config['SESSION_COOKIE_DOMAIN'] = 'https://spotifygpt.pages.dev/chat'
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'

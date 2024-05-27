@@ -34,10 +34,10 @@ class SpotifyManager:
         session.modified = True
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
     
-    @api_bp.before_app_request
-    def before_request():
-        if 'spotify_access_token' not in session:
-            session['spotify_access_token'] = None
+    # @api_bp.before_app_request
+    # def before_request():
+    #     if 'spotify_access_token' not in session:
+    #         session['spotify_access_token'] = None
 
     @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
     @cross_origin(supports_credentials=True)
