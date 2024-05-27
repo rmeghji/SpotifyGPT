@@ -141,7 +141,7 @@ def chat():
         return jsonify({'error': 'User not authenticated'}), 401
     
     print(f"session: {session}")
-    print(f"session from cookies: {request.cookie.get('session')}")
+    print(f"session from cookies: {request.cookies.get('session')}")
 
     # session['spotify_access_token'] = request.cookies.get('spotify_access_token')
     # print(f"token after check: {session.get('spotify_access_token')}")
