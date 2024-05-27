@@ -133,7 +133,7 @@ def main():
             ]
         )
 
-@app_bp.route('/chat', methods=['POST'])
+@api_bp.route('/chat', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def chat():
     request_data = request.get_json()
