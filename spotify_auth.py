@@ -63,7 +63,7 @@ class SpotifyManager:
         print(f"token immediately after auth: {session.get('spotify_access_token')}")
         print(f"cookie domain in callback: {current_app.config['SESSION_COOKIE_DOMAIN']}")
 
-        response = make_response(jsonify({'login_status': status, 'access_token': token}), 200)
+        response = make_response(jsonify({'login_status': status}), 200)
         # response = make_response(redirect(url_for('app.test')))
 
         # response = jsonify({'login_status': status})
