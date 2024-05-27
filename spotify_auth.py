@@ -7,11 +7,11 @@ from spotipy.oauth2 import SpotifyOAuth
 
 api_bp = Blueprint('api', __name__)
 CORS(api_bp,
-     supports_credentials=True,
-     allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'],
-     origins=['http://localhost:5173/', 'https://spotifygpt.pages.dev'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     )
+    supports_credentials=True,
+    allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'],
+    origins=['http://localhost:5173/', 'https://spotifygpt.pages.dev'],
+    methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    )
 
 class SpotifyManager:
     _instance = None
@@ -59,6 +59,8 @@ class SpotifyManager:
         token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
         session['spotify_access_token'] = token
         session.modified = True
+
+        current_app.config['spotify_access_token'] = token
 
         print(f"token immediately after auth: {session.get('spotify_access_token')}")
         print(f"cookie domain in callback: {current_app.config['SESSION_COOKIE_DOMAIN']}")
