@@ -26,6 +26,7 @@ export default {
             )
             .then(response => response)
             .then(response => {
+                console.log(response)
                 this.$router.push({ path: '/chat'})
             })
             .catch(error => {
