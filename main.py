@@ -157,7 +157,7 @@ def chat():
             ]
         )
     response = make_response(jsonify({'response': result['output']}), 200)
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    # response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 
 @app_bp.route('/')
