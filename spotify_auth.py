@@ -3,7 +3,7 @@ from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify
 from flask_cors import cross_origin, CORS
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from run import app
+# from run import app
 
 api_bp = Blueprint('api', __name__)
 CORS(api_bp,
