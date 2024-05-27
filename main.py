@@ -141,7 +141,7 @@ def chat():
     print(f"token before chat: {session.get('spotify_access_token')}")
     print(f"session var keys: {session.keys()}")
     print(f"cookie keys: {request.cookies.keys()}")
-    if 'spotify_access_token' not in session and 'spotify_access_token' not in request.cookies:
+    if 'spotify_access_token' not in session or session.get('spotify_access_token') is None:
         return jsonify({'error': 'User not authenticated'}), 401
     
     # session['spotify_access_token'] = request.cookies.get('spotify_access_token')
