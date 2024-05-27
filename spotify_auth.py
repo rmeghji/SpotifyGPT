@@ -64,7 +64,7 @@ class SpotifyManager:
         print(f"cookies in callback req: {request.cookies}")
 
         response = make_response(jsonify({'login_status': status}), 200)
-        response.set_cookie('spotify_access_token', token, samesite=None, secure=True)
+        response.set_cookie('spotify_access_token', token, samesite=None, httponly=True)
         response.headers['Authorization'] = f'Bearer {token}'
 
         return response
