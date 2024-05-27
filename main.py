@@ -144,8 +144,8 @@ def chat():
     if 'spotify_access_token' not in session and 'spotify_access_token' not in request.cookies:
         return jsonify({'error': 'User not authenticated'}), 401
     
-    session['spotify_access_token'] = request.cookies.get('spotify_access_token')
-    print(f"token after check: {session.get('spotify_access_token')}")
+    # session['spotify_access_token'] = request.cookies.get('spotify_access_token')
+    # print(f"token after check: {session.get('spotify_access_token')}")
 
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
