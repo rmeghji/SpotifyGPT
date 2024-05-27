@@ -24,6 +24,7 @@ export default {
                 { code: code },
                 { responseType: 'json', withCredentials: true, headers: { 'Content-Type': 'application/json' } }
             )
+            .then(response => response)
             .then(response => {
                 this.$router.push({ path: '/chat'})
             })
