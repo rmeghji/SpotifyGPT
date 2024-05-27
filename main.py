@@ -135,7 +135,7 @@ def main():
 
 # @app.route('/', methods=['POST'])
 # @app_bp.route('/chat', methods=['POST'])
-@api_bp.route('/chat', methods=['POST'])
+@current_app.route('/chat', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def chat():
     print(f"token before chat: {session.get('spotify_access_token')}")

@@ -3,7 +3,7 @@ from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify
 from flask_cors import cross_origin, CORS
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-# from run import app
+from run import app
 
 api_bp = Blueprint('api', __name__)
 CORS(api_bp,
@@ -34,7 +34,8 @@ class SpotifyManager:
         session.modified = True
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
 
-    @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
+    # @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
+    @current_app.route('/callback', methods=['POST', 'OPTIONS'])
     @cross_origin(supports_credentials=True)
     # @cross_origin(origins=['http://localhost:5173/, https://spotifygpt.pages.dev'], supports_credentials=True, allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'])
     def callback():
@@ -57,7 +58,7 @@ class SpotifyManager:
 
         print(f"token immediately after auth: {session.get('spotify_access_token')}")
 
-        response = make_response(jsonify({'login_status': status}), 200)
+        response = make_response(jsonify({'login_status': status, 'access_token': token}), 200)
 
         # response = jsonify({'login_status': status})
         # response.headers['Access-Control-Allow-Origin'] = 'https://spotifygpt.pages.dev'
@@ -66,8 +67,8 @@ class SpotifyManager:
         # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
-    @api_bp.route('/login', methods=['GET'])
-    # @cross_origin(origins=['http://localhost:5173/, https://spotifygpt.pages.dev/'], supports_credentials=True)
+    # @api_bp.route('/login', methods=['GET'])
+    @current_app.route('/login', methods=['GET'])
     @cross_origin()
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
