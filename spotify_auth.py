@@ -34,8 +34,7 @@ class SpotifyManager:
         session.modified = True
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
 
-    # @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
-    @current_app.route('/callback', methods=['POST', 'OPTIONS'])
+    @api_bp.route('/callback', methods=['POST', 'OPTIONS'])
     @cross_origin(supports_credentials=True)
     # @cross_origin(origins=['http://localhost:5173/, https://spotifygpt.pages.dev'], supports_credentials=True, allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'])
     def callback():
@@ -67,8 +66,7 @@ class SpotifyManager:
         # response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
-    # @api_bp.route('/login', methods=['GET'])
-    @current_app.route('/login', methods=['GET'])
+    @api_bp.route('/login', methods=['GET'])
     @cross_origin()
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''

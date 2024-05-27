@@ -133,11 +133,11 @@ def main():
             ]
         )
 
-# @app.route('/', methods=['POST'])
-# @app_bp.route('/chat', methods=['POST'])
-@current_app.route('/chat', methods=['POST'])
+@app_bp.route('/chat', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def chat():
+    request_data = request.get_json()
+    print(f"request_data: {request_data}")
     print(f"token before chat: {session.get('spotify_access_token')}")
     print(f"session var keys: {session.keys()}")
     if 'spotify_access_token' not in session:
