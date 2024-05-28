@@ -60,8 +60,8 @@ class SpotifyManager:
         # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
         token = SpotifyOAuth(scope=scope).get_access_token(code=code)['access_token']
 
-        session['spotify_access_token'] = token
-        session.modified = True
+        # session['spotify_access_token'] = token
+        # session.modified = True
 
         print(f"token immediately after auth: {session.get('spotify_access_token')}")
         print(f"cookie domain in callback: {current_app.config['SESSION_COOKIE_DOMAIN']}")
