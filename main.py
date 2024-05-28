@@ -145,6 +145,7 @@ def chat():
     # print(f"session from cookies: {request.cookies.get('session')}")
 
     session['spotify_access_token'] = request.cookies.get('spotify_access_token')
+    session.modified = True
     # print(f"token after check: {session.get('spotify_access_token')}")
 
     user_input = request.get_json()['input']
