@@ -137,8 +137,8 @@ def main():
 @cross_origin(supports_credentials=True)
 def chat():
     # if 'session' not in request.cookies or 'spotify_access_token' not in session or session.get('spotify_access_token') is None:
+    session.pop('spotify_access_token')
     if 'spotify_access_token' not in request.cookies:
-        session.clear()
         return jsonify({'error': 'User not authenticated'}), 401
     
     # print(f"session: {session}")
