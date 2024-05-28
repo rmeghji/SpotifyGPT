@@ -12,7 +12,7 @@ class SpotifyManager:
 
     def __init__(self) -> None:
         self.scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
-        self.auth_manager = SpotifyOAuth(scope=self.scope, open_browser=False)
+        self.auth_manager = SpotifyOAuth(scope=self.scope, open_browser=True)
         self.spotify = None
 
     @classmethod
