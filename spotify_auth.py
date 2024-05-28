@@ -13,6 +13,8 @@ CORS(api_bp,
     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     )
 
+scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
+
 class SpotifyManager:
     _instance = None
 
@@ -27,12 +29,12 @@ class SpotifyManager:
             cls._instance = cls()
         return cls._instance
     
-    def authenticate(self, code):
-        token = self.auth_manager.get_access_token(code=code)['access_token']
-        self.spotify = spotipy.Spotify(auth=token, auth_manager=self.auth_manager)
-        session['spotify_access_token'] = token
-        session.modified = True
-        return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
+    # def authenticate(self, code):
+    #     token = self.auth_manager.get_access_token(code=code)['access_token']
+    #     self.spotify = spotipy.Spotify(auth=token, auth_manager=self.auth_manager)
+    #     session['spotify_access_token'] = token
+    #     session.modified = True
+    #     return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
     
     # @api_bp.before_app_request
     # def before_request():
@@ -52,10 +54,12 @@ class SpotifyManager:
 
         # print(f"code: {code}")
 
-        status = SpotifyManager.get_instance().authenticate(code)
+        # status = SpotifyManager.get_instance().authenticate(code)
         # print(f"status: {status}")
         
-        token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
+        # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
+        token = SpotifyOAuth(scope=scope).get_access_token(code=code)['access_token']
+
         session['spotify_access_token'] = token
         session.modified = True
 
@@ -63,9 +67,9 @@ class SpotifyManager:
         print(f"cookie domain in callback: {current_app.config['SESSION_COOKIE_DOMAIN']}")
         print(f"cookies in callback req: {request.cookies}")
 
-        response = make_response(jsonify({'login_status': status}), 200)
+        response = make_response(jsonify({'login_status': "valid"}), 200)
         # response.set_cookie('spotify_access_token', token, samesite="None", httponly=True, secure=True)
-        response.headers['Authorization'] = f'Bearer {token}'
+        # response.headers['Authorization'] = f'Bearer {token}'
 
         return response
 
