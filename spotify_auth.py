@@ -51,6 +51,7 @@ class SpotifyManager:
     # @cross_origin(origins=['http://localhost:5173'])
     def login():
         # response = redirect(self.auth_manager.get_authorize_url())
+        session.clear()
         response = redirect(SpotifyManager.get_instance().auth_manager.get_authorize_url())
         # response.headers['Access-Control-Allow-Origin'] = '*'
         # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
