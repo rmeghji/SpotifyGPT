@@ -9,12 +9,9 @@
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
     </form>
-    <div id="chat-output">
-        {{ chat_history }}
-    </div>
+    <div id="chat-output"></div>
 
     <script>
-        // document.getElementById('chat-output').textContent = chat_history;
         document.getElementById('chat-form').addEventListener('submit', function(event) {
             event.preventDefault();
             var input = document.getElementById('chat-input').value;
@@ -25,9 +22,10 @@
                 },
                 body: JSON.stringify({ input: input })
             })
+            document.getElementById('chat-output').textContent += 'You: ' + input + '\n';
             .then(response => response.json())
             .then(data => {
-                // document.getElementById('chat-output').textContent = data.response;
+                document.getElementById('chat-output').textContent += data.response + '\n';
                 document.getElementById('chat-input').value = '';
             })
             .catch(error => {
