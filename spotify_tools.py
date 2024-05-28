@@ -3,7 +3,7 @@ from time import sleep
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from langchain.agents import tool
-from flask import Flask, redirect, session
+from flask import Flask, redirect, session, url_for
 from spotify_auth import SpotifyManager
 # from main import spotify
 # from flask_cors import CORS, cross_origin
@@ -38,7 +38,7 @@ def check_login():
             cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
             auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
             if not auth_manager.validate_token(cache_handler.get_cached_token()):
-                return redirect('/')
+                return redirect(url_for('api.login'))
 
             spotify = spotipy.Spotify(auth_manager=auth_manager)
             spotify.current_user()
@@ -59,7 +59,7 @@ def current_track():
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
+        return redirect(url_for('api.login'))
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     return f"{spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}\n"
@@ -72,7 +72,7 @@ def skip():
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
+        return redirect(url_for('api.login'))
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     spotify.next_track()
@@ -87,7 +87,7 @@ def pause():
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
+        return redirect(url_for('api.login'))
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     if spotify.current_playback()['is_playing']:
@@ -104,7 +104,7 @@ def play():
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        return redirect('/')
+        return redirect(url_for('api.login'))
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     if not spotify.current_playback()['is_playing']:
