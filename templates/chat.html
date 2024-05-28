@@ -22,9 +22,9 @@
                 },
                 body: JSON.stringify({ input: input })
             })
-            document.getElementById('chat-output').textContent += 'You: ' + input + '\n';
             .then(response => response.json())
             .then(data => {
+                document.getElementById('chat-output').textContent += 'You: ' + input + '\n';
                 document.getElementById('chat-output').textContent += data.response + '\n';
                 document.getElementById('chat-input').value = '';
             })
