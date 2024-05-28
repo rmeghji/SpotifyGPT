@@ -5,11 +5,12 @@
 </head>
 <body>
     <h1>My Spotify Chatbot</h1>
+    <p>{{ chat_history[0].content }}</p>
+    <div id="chat-output"></div>
     <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
     </form>
-    <div id="chat-output"></div>
 
     <script>
         document.getElementById('chat-form').addEventListener('submit', function(event) {
@@ -24,8 +25,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('chat-output').textContent += 'You: ' + input + '\n';
-                document.getElementById('chat-output').textContent += data.response + '\n';
+                document.getElementById('chat-output').textContent += 'You: ' + input;
+                document.getElementById('chat-output').textContent += data.response;
                 document.getElementById('chat-input').value = '';
             })
             .catch(error => {
