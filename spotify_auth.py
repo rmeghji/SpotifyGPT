@@ -77,6 +77,7 @@ class SpotifyManager:
     @cross_origin(supports_credentials=True)
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
+        session.clear()
         response = make_response(jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()}), 200)
         return response
     
