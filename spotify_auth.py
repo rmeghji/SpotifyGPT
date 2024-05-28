@@ -26,9 +26,8 @@ class SpotifyManager:
         self.spotify = spotipy.Spotify(auth=token)
         return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
     
-    # @app.route('/callback', methods=['GET'])
     @api_bp.route('/callback', methods=['GET'])
-    @cross_origin(origins=['http://localhost:5173'])
+    # @cross_origin(origins=['http://localhost:5173'])
     def callback():
         code = request.args['code']
         # token = self.auth_manager.get_access_token(code=code)['access_token']
@@ -42,14 +41,14 @@ class SpotifyManager:
         # response = redirect('http://localhost:5173/')
         response = redirect(url_for('app'))
         # response = redirect(url_for('app.chat'))
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
+        # response.headers['Access-Control-Allow-Origin'] = '*'
+        # response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        # response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
         return response
 
     # @app.route('/login', methods=['GET'])
     @api_bp.route('/login', methods=['GET'])
-    @cross_origin(origins=['http://localhost:5173'])
+    # @cross_origin(origins=['http://localhost:5173'])
     def login():
         # response = redirect(self.auth_manager.get_authorize_url())
         response = redirect(SpotifyManager.get_instance().auth_manager.get_authorize_url())

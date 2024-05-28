@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1>My Spotify Chatbot</h1>
+    <button type="submit" id="login-button">Login</button>
     <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
@@ -26,6 +27,16 @@
             .then(data => {
                 document.getElementById('chat-output').textContent = data.response;
                 document.getElementById('chat-input').value = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        document.getElementById('login-button').addEventListener('click', function() {
+            fetch('/login')
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = data.url;
             })
             .catch(error => {
                 console.error('Error:', error);
