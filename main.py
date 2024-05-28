@@ -136,14 +136,15 @@ def main():
 @api_bp.route('/chat', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def chat():
-    if 'session' not in request.cookies or 'spotify_access_token' not in session or session.get('spotify_access_token') is None:
+    # if 'session' not in request.cookies or 'spotify_access_token' not in session or session.get('spotify_access_token') is None:
+    if 'spotify_access_token' not in request.cookies:
         session.clear()
         return jsonify({'error': 'User not authenticated'}), 401
     
-    print(f"session: {session}")
-    print(f"session from cookies: {request.cookies.get('session')}")
+    # print(f"session: {session}")
+    # print(f"session from cookies: {request.cookies.get('session')}")
 
-    # session['spotify_access_token'] = request.cookies.get('spotify_access_token')
+    session['spotify_access_token'] = request.cookies.get('spotify_access_token')
     # print(f"token after check: {session.get('spotify_access_token')}")
 
     user_input = request.get_json()['input']
