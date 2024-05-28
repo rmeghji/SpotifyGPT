@@ -68,7 +68,7 @@ class SpotifyManager:
         print(f"cookies in callback req: {request.cookies}")
 
         response = make_response(jsonify({'login_status': "valid"}), 200)
-        # response.set_cookie('spotify_access_token', token, samesite="None", httponly=True, secure=True)
+        response.set_cookie('spotify_access_token', token, samesite="None", httponly=True, secure=True)
         # response.headers['Authorization'] = f'Bearer {token}'
 
         return response
@@ -78,6 +78,7 @@ class SpotifyManager:
     def login():
         '''New login method that returns jsonified url instead of redirecting.'''
         session.clear()
+        session.modified = True
         response = make_response(jsonify({'url': SpotifyManager.get_instance().auth_manager.get_authorize_url()}), 200)
         return response
     
