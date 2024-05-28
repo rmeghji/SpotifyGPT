@@ -3,7 +3,7 @@ from flask import Flask, redirect, request, Blueprint, url_for, session
 from flask_cors import cross_origin
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-# from run import app
+from flask_session import Session
 
 api_bp = Blueprint('api', __name__)
 
@@ -11,8 +11,9 @@ class SpotifyManager:
     _instance = None
 
     def __init__(self) -> None:
+        self.cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
         self.scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
-        self.auth_manager = SpotifyOAuth(scope=self.scope, open_browser=True)
+        self.auth_manager = SpotifyOAuth(scope=self.scope, cache_handler=self.cache_handler)
         self.spotify = None
 
     @classmethod

@@ -129,6 +129,9 @@ def main():
 # @app.route('/', methods=['POST'])
 @app_bp.route('/send_message', methods=['POST'])
 def send_message():
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    print(cache_handler.get_cached_token())
+
     if 'spotify_access_token' not in session:
         # return jsonify({'error': 'User not authenticated'}), 401
         return redirect(url_for('api.login'))
