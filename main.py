@@ -127,8 +127,8 @@ def main():
         )
 
 # @app.route('/', methods=['POST'])
-@app_bp.route('/chat', methods=['POST'])
-def chat():
+@app_bp.route('/send_message', methods=['POST'])
+def send_message():
     if 'spotify_access_token' not in session:
         # return jsonify({'error': 'User not authenticated'}), 401
         return redirect(url_for('api.login'))
@@ -147,6 +147,10 @@ def chat():
             ]
         )
     return jsonify({'response': result['output']})
+
+@app_bp.route('/chat')
+def chat():
+    return render_template('chat.html', chat_history=chat_history)
 
 @app_bp.route('/')
 def index():
