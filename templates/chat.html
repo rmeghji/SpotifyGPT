@@ -5,8 +5,12 @@
 </head>
 <body>
     <h1>My Spotify Chatbot</h1>
-    <p>{{ chat_history[0].content }}</p>
-    <div id="chat-output"></div>
+    <div id="chat-output">
+        {{ % for message in all_messages % }}
+            <p class="user">{{ message.user }}</p>
+            <p class="response">{{ message.response }}</p>
+        {{ % endfor % }}
+    </div>
     <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
@@ -25,9 +29,9 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('chat-output').textContent += 'You: ' + input;
-                document.getElementById('chat-output').textContent += data.response;
-                document.getElementById('chat-input').value = '';
+                // document.getElementById('chat-output').textContent += 'You: ' + input;
+                // document.getElementById('chat-output').textContent += data.response;
+                // document.getElementById('chat-input').value = '';
             })
             .catch(error => {
                 console.error('Error:', error);

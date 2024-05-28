@@ -24,38 +24,6 @@ tool_parser = OpenAIToolsAgentOutputParser()
 
 spotify = SpotifyManager.get_instance().spotify
 
-# scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
-# auth_manager = SpotifyOAuth(scope=scope, open_browser=False)
-# # spotify = spotipy.Spotify(auth_manager=auth_manager)
-
-# spotify = None
-
-# @app.route('/callback', methods=['GET'])
-# @cross_origin(origins=['http://localhost:5173'])
-# def callback():
-#     code = request.args['code']
-#     token = auth_manager.get_access_token(code=code)['access_token']
-#     global spotify
-#     spotify = spotipy.Spotify(auth=token)
-#     print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
-
-#     response = redirect('http://localhost:5173/')
-#     response.headers['Access-Control-Allow-Origin'] = '*'
-#     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-#     response.headers['Access-Control-Allow-Headers'] = 'content-type, authorization, access-control-allow-origin, access-control-allow-methods, access-control-allow-headers'
-#     return response
-
-# @app.route('/login', methods=['GET'])
-# @cross_origin(origins=['http://localhost:5173'])
-# def login():
-#     response = redirect(auth_manager.get_authorize_url())
-#     response.headers['Access-Control-Allow-Origin'] = '*'
-#     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-#     response.headers['Access-Control-Allow-Headers'] = '*'
-#     return response
-
-# from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
-
 @tool
 def test_tool():
     '''Responds to the user after being asked what the color purple tastes like.'''
@@ -69,6 +37,9 @@ def exit_tool():
 tools = [test_tool, exit_tool, check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist]
 gpt = gpt.bind_tools(tools=tools)
 chat_history = []
+
+# for passing to chat html as context
+all_messages = [{'user': '', 'response': 'How can I help you today?'}]
 
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -111,22 +82,6 @@ agent = (
 
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-def main():
-    while True:
-        result = agent_executor.invoke({'input': input(), 'chat_history': chat_history})
-        chat_history.extend(
-            [
-                HumanMessage(
-                    content=result['input'],
-                ),
-                AIMessage(
-                    content=result['output'],
-                    agent=agent_executor.agent,
-                ),
-            ]
-        )
-
-# @app.route('/', methods=['POST'])
 @app_bp.route('/send_message', methods=['POST'])
 def send_message():
     # cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
@@ -156,11 +111,15 @@ def send_message():
                 ),
             ]
         )
+    all_messages.append({'user': result['input'], 'response': result['output']})
     return jsonify({'response': result['output']})
 
 @app_bp.route('/chat')
 def chat():
-    return render_template('chat.html', chat_history=chat_history)
+    context = {
+        'all_messages': all_messages
+    }
+    return render_template('chat.html', **context)
 
 # @app_bp.route('/')
 # def index():
