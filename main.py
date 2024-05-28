@@ -152,10 +152,10 @@ def send_message():
 def chat():
     return render_template('chat.html', chat_history=chat_history)
 
-@app_bp.route('/')
-def index():
-    session.clear()
-    return render_template('index.html')
+# @app_bp.route('/')
+# def index():
+#     session.clear()
+#     return render_template('index.html')
 
 # if __name__ == "__main__":
 #     app.run()
