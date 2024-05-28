@@ -34,7 +34,13 @@ def check_login():
         try:
             # spotify = SpotifyManager.get_instance().spotify
             # global spotify
-            spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+            # spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+            cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+            auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+            if not auth_manager.validate_token(cache_handler.get_cached_token()):
+                return redirect('/')
+
+            spotify = spotipy.Spotify(auth_manager=auth_manager)
             spotify.current_user()
             break
         except:
@@ -49,14 +55,26 @@ def check_login():
 @tool
 def current_track():
     '''Returns the current track playing on the user's Spotify account in the format "Artist Name - Song Title".'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    # spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
     return f"{spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}\n"
 
 # @with_spotify_auth
 @tool
 def skip():
     '''Skips to the next track in the user's Spotify queue. Tells user what song is now playing.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    # spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
     spotify.next_track()
     sleep(0.5)
     return f"Skipped to the next track. Now playing is {spotify.current_playback()['item']['artists'][0]['name']} - {spotify.current_playback()['item']['name']}.\n"
@@ -65,7 +83,13 @@ def skip():
 @tool
 def pause():
     '''Pauses the current track in the user's Spotify queue.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    # spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
     if spotify.current_playback()['is_playing']:
         spotify.pause_playback()
         return f"Paused the current track.\n"
@@ -76,7 +100,13 @@ def pause():
 @tool
 def play():
     '''Plays the current track in the user's Spotify queue.'''
-    spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    # spotify = spotipy.Spotify(auth=session['spotify_access_token'])
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
     if not spotify.current_playback()['is_playing']:
         spotify.start_playback()
         return f"Playing the current track.\n"

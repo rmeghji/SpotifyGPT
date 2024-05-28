@@ -129,12 +129,19 @@ def main():
 # @app.route('/', methods=['POST'])
 @app_bp.route('/send_message', methods=['POST'])
 def send_message():
-    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
-    print(cache_handler.get_cached_token())
+    # cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    # print(cache_handler.get_cached_token())
 
-    if 'spotify_access_token' not in session:
-        # return jsonify({'error': 'User not authenticated'}), 401
-        return redirect(url_for('api.login'))
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    # spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+    # if 'spotify_access_token' not in session:
+    #     # return jsonify({'error': 'User not authenticated'}), 401
+    #     return redirect(url_for('api.login'))
 
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
