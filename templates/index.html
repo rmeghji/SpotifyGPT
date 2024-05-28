@@ -6,32 +6,32 @@
 <body>
     <h1>My Spotify Chatbot</h1>
     <button type="submit" id="login-button">Login</button>
-    <form id="chat-form">
+    <!-- <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
-    </form>
+    </form> -->
     <div id="chat-output"></div>
 
     <script>
-        document.getElementById('chat-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var input = document.getElementById('chat-input').value;
-            fetch('/send_message', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ input: input })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('chat-output').textContent = data.response;
-                document.getElementById('chat-input').value = '';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+        // document.getElementById('chat-form').addEventListener('submit', function(event) {
+        //     event.preventDefault();
+        //     var input = document.getElementById('chat-input').value;
+        //     fetch('/send_message', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ input: input })
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         document.getElementById('chat-output').textContent = data.response;
+        //         document.getElementById('chat-input').value = '';
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //     });
+        // });
         document.getElementById('login-button').addEventListener('click', function() {
             window.location.href = '/login';
         });

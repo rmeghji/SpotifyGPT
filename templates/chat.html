@@ -9,9 +9,12 @@
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
     </form>
-    <div id="chat-output"></div>
+    <div id="chat-output">
+        {{ chat_history }}
+    </div>
 
     <script>
+        // document.getElementById('chat-output').textContent = chat_history;
         document.getElementById('chat-form').addEventListener('submit', function(event) {
             event.preventDefault();
             var input = document.getElementById('chat-input').value;
