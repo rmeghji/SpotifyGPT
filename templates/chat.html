@@ -15,7 +15,7 @@
         document.getElementById('chat-form').addEventListener('submit', function(event) {
             event.preventDefault();
             var input = document.getElementById('chat-input').value;
-            fetch('/chat', {
+            fetch('/send_message', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
