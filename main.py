@@ -8,21 +8,14 @@ from langchain.agents import tool, AgentExecutor
 from langchain.agents.format_scratchpad.openai_tools import format_to_openai_tool_messages
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from spotify_tools import check_login, current_track, skip, pause, play, search, play_song, narrow_search, play_album, play_artist, play_playlist
-from flask import Flask, jsonify, redirect, request, Blueprint, session, make_response, current_app, render_template
+from flask import Flask, jsonify, redirect, request, Blueprint, session, render_template, url_for
 from flask_cors import CORS, cross_origin
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
 # from run import app
-from spotify_auth import api_bp
 from spotify_auth import SpotifyManager
 
 app_bp = Blueprint('app', __name__)
-CORS(app_bp,
-     supports_credentials=True,
-     allow_headers=['access-control-allow-origin', 'access-control-allow-methods', 'access-control-allow-headers', 'access-control-allow-credentials'],
-     origins=['http://localhost:5173/', 'https://spotifygpt.pages.dev'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     )
 
 # app = Flask(__name__)
 # CORS(app)
@@ -133,21 +126,12 @@ def main():
             ]
         )
 
-@api_bp.route('/chat', methods=['POST'])
-@cross_origin(supports_credentials=True)
+# @app.route('/', methods=['POST'])
+@app_bp.route('/chat', methods=['POST'])
 def chat():
-    # if 'session' not in request.cookies or 'spotify_access_token' not in session or session.get('spotify_access_token') is None:
-    if 'spotify_access_token' in session:
-        session.pop('spotify_access_token')
-    if 'spotify_access_token' not in request.cookies:
-        return jsonify({'error': 'User not authenticated'}), 401
-    
-    # print(f"session: {session}")
-    # print(f"session from cookies: {request.cookies.get('session')}")
-
-    session['spotify_access_token'] = request.cookies.get('spotify_access_token')
-    session.modified = True
-    # print(f"token after check: {session.get('spotify_access_token')}")
+    if 'spotify_access_token' not in session:
+        # return jsonify({'error': 'User not authenticated'}), 401
+        return redirect(url_for('api.login'))
 
     user_input = request.get_json()['input']
     result = agent_executor.invoke({'input': user_input, 'chat_history': chat_history})
@@ -162,13 +146,11 @@ def chat():
                 ),
             ]
         )
-    response = make_response(jsonify({'response': result['output']}), 200)
-    return response
+    return jsonify({'response': result['output']})
 
 @app_bp.route('/')
 def index():
     return render_template('index.html')
-    # return "Hello, World!"
 
 # if __name__ == "__main__":
 #     app.run()
