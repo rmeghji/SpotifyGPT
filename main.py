@@ -154,6 +154,7 @@ def chat():
 
 @app_bp.route('/')
 def index():
+    session.clear()
     return render_template('index.html')
 
 # if __name__ == "__main__":
