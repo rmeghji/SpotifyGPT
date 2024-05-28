@@ -33,14 +33,15 @@
             });
         });
         document.getElementById('login-button').addEventListener('click', function() {
-            fetch('/login')
-            .then(response => response.json())
-            .then(data => {
-                window.location.href = data.url;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            // fetch('/login')
+            // .then(response => response.json())
+            // .then(data => {
+            //     window.location.href = data.url;
+            // })
+            // .catch(error => {
+            //     console.error('Error:', error);
+            // });
+            window.location.href = '/login';
         });
     </script>
 </body>
