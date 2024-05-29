@@ -137,9 +137,14 @@ def main():
 @cross_origin(supports_credentials=True)
 def chat():
     # if 'session' not in request.cookies or 'spotify_access_token' not in session or session.get('spotify_access_token') is None:
-    if 'spotify_access_token' in session:
-        session.pop('spotify_access_token')
-    if 'spotify_access_token' not in request.cookies:
+    # if 'spotify_access_token' in session:
+    #     session.pop('spotify_access_token')
+    # if 'spotify_access_token' not in request.cookies:
+    #     return jsonify({'error': 'User not authenticated'}), 401
+    
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
         return jsonify({'error': 'User not authenticated'}), 401
     
     # print(f"session: {session}")

@@ -3,7 +3,6 @@ from flask import Flask, redirect, request, Blueprint, url_for, session, jsonify
 from flask_cors import cross_origin, CORS
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-# from run import app
 
 api_bp = Blueprint('api', __name__)
 CORS(api_bp,
@@ -19,8 +18,9 @@ class SpotifyManager:
     _instance = None
 
     def __init__(self) -> None:
+        self.cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
         self.scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-library-read', 'user-follow-read', 'playlist-read-private', 'user-read-recently-played']
-        self.auth_manager = SpotifyOAuth(scope=self.scope, open_browser=False)
+        self.auth_manager = SpotifyOAuth(scope=self.scope, open_browser=False, cache_handler=self.cache_handler)
         self.spotify = None
 
     @classmethod
@@ -29,12 +29,12 @@ class SpotifyManager:
             cls._instance = cls()
         return cls._instance
     
-    # def authenticate(self, code):
-    #     token = self.auth_manager.get_access_token(code=code)['access_token']
-    #     self.spotify = spotipy.Spotify(auth=token, auth_manager=self.auth_manager)
-    #     session['spotify_access_token'] = token
-    #     session.modified = True
-    #     return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
+    def authenticate(self, code):
+        token = self.auth_manager.get_access_token(code=code)['access_token']
+        self.spotify = spotipy.Spotify(auth=token, auth_manager=self.auth_manager)
+        # session['spotify_access_token'] = token
+        # session.modified = True
+        return f"Logged in to Spotify as {self.spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat."
     
     # @api_bp.before_app_request
     # def before_request():
@@ -54,11 +54,11 @@ class SpotifyManager:
 
         # print(f"code: {code}")
 
-        # status = SpotifyManager.get_instance().authenticate(code)
+        status = SpotifyManager.get_instance().authenticate(code)
         # print(f"status: {status}")
         
         # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
-        token = SpotifyOAuth(scope=scope).get_access_token(code=code)['access_token']
+        # token = SpotifyOAuth(scope=scope).get_access_token(code=code)['access_token']
 
         # session['spotify_access_token'] = token
         # session.modified = True
@@ -68,7 +68,7 @@ class SpotifyManager:
         print(f"cookies in callback req: {request.cookies}")
 
         response = make_response(jsonify({'login_status': "valid"}), 200)
-        response.set_cookie('spotify_access_token', token, samesite="None", httponly=True, secure=True)
+        # response.set_cookie('spotify_access_token', token, samesite="None", httponly=True, secure=True)
 
         return response
 
