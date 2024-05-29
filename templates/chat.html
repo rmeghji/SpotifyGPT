@@ -28,7 +28,7 @@
                 },
                 body: JSON.stringify({ input: input })
             })
-            .then(response => response)
+            .then(response => response.json())
             .then(data => {
                 // document.getElementById('chat-output').textContent += 'You: ' + input;
                 // document.getElementById('chat-output').textContent += data.response;
