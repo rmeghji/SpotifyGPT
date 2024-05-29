@@ -5,13 +5,7 @@
 </head>
 <body>
     <h1>My Spotify Chatbot</h1>
-    <div id="chat-output">
-        {% for message in all_messages %}
-            <!-- {{ message.user }}: {{ message.response }} -->
-            <p class="user">{{ message.user }}</p>
-            <p class="response">{{ message.response }}</p>
-        {% endfor %}
-    </div>
+    <div id="chat-output"></div>
     <form id="chat-form">
         <input type="text" id="chat-input" placeholder="Enter your message">
         <button type="submit">Send</button>
