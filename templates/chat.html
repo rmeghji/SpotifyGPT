@@ -28,12 +28,12 @@
                 },
                 body: JSON.stringify({ input: input })
             })
-            .then(response => response.json())
+            .then(response => response)
             .then(data => {
                 // document.getElementById('chat-output').textContent += 'You: ' + input;
                 // document.getElementById('chat-output').textContent += data.response;
                 // document.getElementById('chat-input').value = '';
-                document.getElementById('chat-output')
+                // document.getElementById('chat-output')
             })
             .catch(error => {
                 console.error('Error:', error);
