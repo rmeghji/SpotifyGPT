@@ -54,8 +54,13 @@ class SpotifyManager:
 
         # print(f"code: {code}")
 
-        status = SpotifyManager.get_instance().authenticate(code)
+        # status = SpotifyManager.get_instance().authenticate(code)
         # print(f"status: {status}")
+        token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
+        global spotify
+        spotify = spotipy.Spotify(auth=token)
+        print(f"Logged in to Spotify as {spotify.me()} and granted necessary permissions. You can now close this tab and return to the chat.")
+        session['spotify_access_token'] = token
         
         # token = SpotifyManager.get_instance().auth_manager.get_access_token(code=code)['access_token']
         # token = SpotifyOAuth(scope=scope).get_access_token(code=code)['access_token']
