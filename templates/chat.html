@@ -33,7 +33,6 @@
                 // document.getElementById('chat-output').textContent += 'You: ' + input;
                 // document.getElementById('chat-output').textContent += data.response;
                 // document.getElementById('chat-input').value = '';
-                // document.getElementById('chat-output').innerHTML += '{{<p class="user">{{ data.response }}</p>}}';
                 document.getElementById('chat-output').append(data.response);
             })
             .catch(error => {
