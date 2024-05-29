@@ -112,9 +112,9 @@ def send_message():
             ]
         )
     all_messages.append({'user': result['input'], 'response': result['output']})
-    # return jsonify({'response': result['output']})
+    return jsonify({'response': result['output']})
     # return redirect(url_for('app.chat'))
-    return render_template('chat.html', all_messages=all_messages)
+    # return render_template('chat.html', all_messages=all_messages)
 
 @app_bp.route('/chat')
 def chat():
